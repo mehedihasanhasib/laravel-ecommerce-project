@@ -24,3 +24,11 @@ Route::get('cart', function () {
 Route::get('detail', function () {
     return view('pages.detail');
 })->name('detail');
+
+Route::get('shop', function () {
+    return view('pages.shop');
+})->name('shop');
+
+Route::get('checkout', function () {
+    return view('pages.checkout');
+})->name('checkout');

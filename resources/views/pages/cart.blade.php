@@ -1,7 +1,5 @@
 @extends('index')
 
-
-
 @section('content')
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5">
@@ -15,7 +13,6 @@
         </div>
     </div>
     <!-- Page Header End -->
-
 
     <!-- Cart Start -->
     <div class="container-fluid pt-5">
