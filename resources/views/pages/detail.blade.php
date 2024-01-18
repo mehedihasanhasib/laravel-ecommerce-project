@@ -1,4 +1,4 @@
-@extends('index')
+@extends('home')
 
 @section('content')
     <!-- Page Header Start -->
@@ -45,16 +45,7 @@
 
             <div class="col-lg-7 pb-5">
                 <h3 class="font-weight-semi-bold">Colorful Stylish Shirt</h3>
-                <div class="d-flex mb-3">
-                    <div class="text-primary mr-2">
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star"></small>
-                        <small class="fas fa-star-half-alt"></small>
-                        <small class="far fa-star"></small>
-                    </div>
-                    <small class="pt-1">(50 Reviews)</small>
-                </div>
+
                 <h3 class="font-weight-semi-bold mb-4">$150.00</h3>
                 <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit clita
                     ea. Sanc invidunt ipsum et, labore clita lorem magna lorem ut. Erat lorem duo dolor no sea nonumy.

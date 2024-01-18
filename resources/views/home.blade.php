@@ -50,10 +50,10 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-right">
-                <a href="" class="btn border">
+                {{-- <a href="" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
-                </a>
+                </a> --}}
                 <a href="{{ route('cart') }}" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
                     <span class="badge">0</span>
@@ -66,6 +66,8 @@
     <!-- Navbar Start -->
     <div class="container-fluid mb-5">
         <div class="row border-top px-xl-5">
+
+            {{-- categories starts --}}
             <div class="col-lg-3 d-none d-lg-block">
                 <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
                     data-toggle="collapse" href="#navbar-vertical"
@@ -76,15 +78,6 @@
                 <nav class="collapse {{ $show ?? null }} navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
                     id="navbar-vertical">
                     <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link" data-toggle="dropdown">Dresses <i
-                                    class="fa fa-angle-down float-right mt-1"></i></a>
-                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                <a href="" class="dropdown-item">Men's Dresses</a>
-                                <a href="" class="dropdown-item">Women's Dresses</a>
-                                <a href="" class="dropdown-item">Baby's Dresses</a>
-                            </div>
-                        </div>
                         <a href="" class="nav-item nav-link">Shirts</a>
                         <a href="" class="nav-item nav-link">Jeans</a>
                         <a href="" class="nav-item nav-link">Swimwear</a>
@@ -97,6 +90,7 @@
                     </div>
                 </nav>
             </div>
+            {{-- categories ends --}}
 
             {{-- navigation menu starts --}}
             <div class="col-lg-9">
@@ -111,7 +105,7 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{{ route('index') }}" class="nav-item nav-link active">Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
+                            <a href="{{ route('shop') }}" class="nav-item nav-link">Shop</a>
                             <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
@@ -123,11 +117,29 @@
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="" class="nav-item nav-link">Login</a>
-                            <a href="" class="nav-item nav-link">Register</a>
+                            @if (Route::has('login'))
+                                @auth
+                                    <a href="" class="nav-item nav-link">
+                                        {{ Auth::user()->name }}
+                                    </a>
+
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <input style="background-color: #ffffff;border: none;" class="nav-item nav-link"
+                                            type="submit" value="Logout">
+                                    </form>
+                                @else
+                                    <a href="{{ route('login') }}" class="nav-item nav-link">Log in</a>
+
+                                    @if (Route::has('register'))
+                                        <a href="{{ route('register') }}" class="nav-item nav-link">Register</a>
+                                    @endif
+                                @endauth
+                            @endif
                         </div>
                     </div>
                 </nav>
+                {{-- navigation ends --}}
 
                 @section('header-carousel')
 

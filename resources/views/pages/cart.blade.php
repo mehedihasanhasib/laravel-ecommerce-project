@@ -1,4 +1,4 @@
-@extends('index')
+@extends('home')
 
 @section('content')
     <!-- Page Header Start -->

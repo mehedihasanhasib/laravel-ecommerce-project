@@ -1,4 +1,4 @@
-@extends('index', ['show' => 'show'])
+@extends('home', ['show' => 'show'])
 
 @section('show')
     show
