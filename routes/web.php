@@ -24,9 +24,7 @@ Route::get('cart', function () {
     return view('pages.cart');
 })->name('cart');
 
-Route::get('detail', function () {
-    return view('pages.detail');
-})->name('detail');
+Route::get('detail/{product_id}', [ProductController::class, 'show'])->name('detail');
 
 Route::get('shop', [ProductController::class, 'index'])->name('shop');
 
@@ -34,9 +32,7 @@ Route::get('checkout', function () {
     return view('pages.checkout');
 })->name('checkout');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ProductController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('/product', ProductController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])

@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
-    <title>Tailkit Project</title>
+    <title>Add Product - Admin Dashboard</title>
 
     <!-- Favicons -->
     <link rel="icon" href="favicon.svg" sizes="any" type="image/svg+xml" />
@@ -19,122 +19,194 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="flex items-center h-[100vh]">
-    <!-- component -->
-    <!DOCTYPE html>
-    <html lang="en">
+<body>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@2.x.x/dist/alpine.min.js" defer></script>
-        <title>Dashboard</title>
-    </head>
+    {{-- nav starts here --}}
 
-    <body>
-        <div class="bg-white shadow p-4 py-8 w-full" x-data="{ images: [] }">
-            <div class="heading text-center font-bold text-2xl m-5 text-gray-800 bg-white">Add Product</div>
+
+    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul
+                    class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                    <li>
+                        <a href="{{ route('index') }}"
+                            class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                            aria-current="page">Home</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {{-- nav ends here --}}
+
+    <section class="bg-white dark:bg-gray-900">
+        <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+            <h2 class="mb-4 text-center text-xl font-bold text-gray-900 dark:text-white">Add a new product</h2>
             <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data"
-                class="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+                id="producInfoForm">
                 @csrf
+                <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
 
-                {{-- title --}}
-                <input class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none"
-                    placeholder="Product Title" type="text" name="title">
+                    {{-- product title starts here --}}
+                    <div class="col-span-full">
+                        <label for="name"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Title</label>
+                        <input type="text" name="title"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="Type product name">
 
-                {{-- category --}}
-                <select class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" name="category">
-                    <option value="null">Select Category</option>
-                    <option value="shirts">Shirts</option>
-                    <option value="jeans">Jeans</option>
-                    <option value="swimwear">Swimwear</option>
-                    <option value="sleepwear">Sleepwear</option>
-                    <option value="sportswear">Sportswear</option>
-                    <option value="jumpsuits">Jumpsuits</option>
-                    <option value="blazers">Blazers</option>
-                    <option value="jackets">Jackets</option>
-                    <option value="shoes">Shoes</option>
-                </select>
+                        @error('title')
+                            <p class="text-red-500">{{ $message }}</p>
+                        @enderror
 
-                {{-- price --}}
-                <input class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" placeholder="Price"
-                    type="number" name="price">
+                    </div>
+                    {{-- product title ends here --}}
 
 
-                {{-- stock --}}
-                <input class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" placeholder="Stock"
-                    type="number" name="stock">
+                    {{-- <div>
+                        <label for="category"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                        <select id="category"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @foreach ($categories as $category)
+                                <option selected="">{{ $category->category }}</option>
+                            @endforeach
+                            <option selected="">Select category</option>
+                        </select>
+                    </div> --}}
 
-                {{-- description --}}
-                <textarea class="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" spellcheck="false"
-                    placeholder="Describe everything about this post here" name="description"></textarea>
 
-                <input class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" type="file"
-                    name="product_image">
-                {{-- <!-- icons -->
-                <div class="icons flex text-gray-500 m-2">
-                    <label id="select-image">
-                        <svg class="mr-2 cursor-pointer hover:text-gray-700 border rounded-full p-1 h-7"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                        </svg>
-                        <input hidden type="file" multiple
-                            @change="images = Array.from($event.target.files).map(file => ({url: URL.createObjectURL(file), name: file.name, preview: ['jpg', 'jpeg', 'png', 'gif'].includes(file.name.split('.').pop().toLowerCase()), size: file.size > 1024 ? file.size > 1048576 ? Math.round(file.size / 1048576) + 'mb' : Math.round(file.size / 1024) + 'kb' : file.size + 'b'}))"
-                            x-ref="fileInput">
+                    {{-- price starts here --}}
+                    <div class="w-full">
+                        <label for="price"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                        <input type="number" name="price" id="price"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="$2999">
 
-                    </label>
-                    <div class="count ml-auto text-gray-400 text-xs font-semibold">0/300</div>
-                </div> --}}
+                        @error('price')
+                            <p class="text-red-500">{{ $message }}</p>
+                        @enderror
 
-                <!-- Preview image here -->
-                {{-- <div id="preview" class="my-4 flex">
-                    <template x-for="(image, index) in images" :key="index">
-                        <div class="relative w-32 h-32 object-cover rounded ">
-                            <div x-show="image.preview" class="relative w-32 h-32 object-cover rounded">
-                                <img :src="image.url" class="w-32 h-32 object-cover rounded">
-                                <button @click="images.splice(index, 1)"
-                                    class="w-6 h-6 absolute text-center flex items-center top-0 right-0 m-2 text-white text-lg bg-red-500 hover:text-red-700 hover:bg-gray-100 rounded-full p-1"><span
-                                        class="mx-auto">×</span></button>
-                                <div x-text="image.size" class="text-xs text-center p-2"></div>
-                            </div>
-                            <div x-show="!image.preview" class="relative w-32 h-32 object-cover rounded">
-                                <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 fill-white stroke-indigo-500" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg> -->
-                                <svg class="fill-current  w-32 h-32 ml-auto pt-1" xmlns="http://www.w3.org/2000/svg"
-                                    width="24" height="24" viewBox="0 0 24 24">
-                                    <path d="M15 2v5h5v15h-16v-20h11zm1-2h-14v24h20v-18l-6-6z" />
-                                </svg>
-                                <button @click="images.splice(index, 1)"
-                                    class="w-6 h-6 absolute text-center flex items-center top-0 right-0 m-2 text-white text-lg bg-red-500 hover:text-red-700 hover:bg-gray-100 rounded-full p-1"><span
-                                        class="mx-auto">×</span></button>
-                                <div x-text="image.size" class="text-xs text-center p-2"></div>
-                            </div>
+                    </div>
+                    {{-- price ends here --}}
 
-                        </div>
-                    </template>
-                </div> --}}
-                <!-- Buttons -->
-                <div class="buttons flex justify-end">
-                    <button
-                        class="mt-3 btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">
-                        Add</button>
+                    {{-- category starts here --}}
+                    <div>
+                        <label for="category"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                        <select id="category" name="category"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @foreach ($categories as $category)
+                                <option selected="" value="{{ $category->category }}">{{ $category->category }}
+                                </option>
+                            @endforeach
+                            <option selected="">Select category</option>
+                        </select>
+
+                        @error('category')
+                            <p class="text-red-500">{{ $message }}</p>
+                        @enderror
+
+                    </div>
+                    {{-- category ends here --}}
+
+
+
+
+                    {{-- color variant starts here --}}
+
+
+                    <div class="col-span-full">
+
+                        <button id="createInput"
+                            class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                            Add Color
+                        </button>
+
+                    </div>
+
+                    <div id="inputContainer">
+
+                        @error('color')
+                            <p class="text-red-500">{{ $message }}</p>
+                        @enderror
+
+                    </div>
+
+
+
+                    <div id="inputStockContainer">
+
+                        @error('stock')
+                            <p class="text-red-500">{{ $message }}</p>
+                        @enderror
+
+                    </div>
+
+
+                    {{-- color variant ends here --}}
+
+
+
+                    <div class="sm:col-span-2">
+                        <label for="description"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                        <textarea name="desc" id="description" rows="8"
+                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="Your description here"></textarea>
+                    </div>
                 </div>
+                <button type="submit" id="submitButton"
+                    class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                    Add product
+                </button>
             </form>
         </div>
+    </section>
 
-        <script>
-            function isImage(file) {
-                const acceptedImageTypes = ['jpg', 'jpeg', 'png', 'gif'].includes(file.name.split('.').pop().toLowerCase());
-                const extension = file.name.split('.').pop().toLowerCase();
-                return acceptedImageTypes.includes(extension);
-            }
-        </script>
-    </body>
+    <script>
+        document.getElementById("createInput").addEventListener("click", function(event) {
+            event.preventDefault();
+            console.log("hello");
 
-    </html>
+            let input = document.createElement("input");
+            let inputStock = document.createElement("input");
+
+            // Set attributes for the input element
+            input.type = "text";
+            input.name = "color"; // You can set any name you prefer
+            input.className =
+                "mt-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500";
+            input.placeholder = "color"
+
+            // stock price
+            inputStock.type = "number";
+            inputStock.name = "stock"; // You can set any name you prefer
+            inputStock.className =
+                "mt-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            inputStock.placeholder = "Stock"
+
+            // Append the input element to a container (e.g., a div with id 'inputContainer')
+            document.getElementById("inputContainer").appendChild(input);
+            document.getElementById("inputStockContainer").appendChild(inputStock);
+
+            // document.getElementById('submitButton').addEventListener('click', function() {
+            //     // Get references to the forms
+            //     let form1 = document.getElementById('productInfoForm');
+            //     let form2 = document.getElementById('colorVariantForm');
+
+            //     // Submit both forms
+            //     form1.submit();
+            //     form2.submit();
+
+            //     console.log('hello');
+            // })
+        });
+    </script>
 </body>
 
 </html>

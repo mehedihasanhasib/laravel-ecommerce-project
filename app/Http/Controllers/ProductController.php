@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -22,7 +24,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return view('dashboard', ['categories' => $categories]);
     }
 
     /**
@@ -30,28 +34,40 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'title' => 'required|max:255',
-        //     'category' => 'required',
-        //     'description' => 'required',
-        //     'price' => 'required',
-        //     'stock' => 'required'
-        // ]);
+        $request->validate([
+            'title' => 'required|max:255',
+            'category' => 'required',
+            'price' => 'required',
+            // 'stock' => 'required',
+            'color' => 'required'
+        ]);
 
-        // print_r($request->file('product_image')->getClientOriginalName());
 
-        dump($request->file());
-        // Product::create($request->input());
+        $data = $request->input();
 
-        // return redirect()->route('shop');
+        // dump($data);
+
+        Product::create([
+            'title' => $data['title'],
+            'description' => $data['desc'],
+            'price' => $data['price']
+        ]);
+
+        Color::create([
+            'color' => $data['color']
+        ]);
+
+        return redirect()->route('shop');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show($product_id)
     {
-        //
+        $product = Product::find($product_id);
+        $colors = Color::all();
+        return view('pages.detail', ['product' => $product, 'colors' => $colors]);
     }
 
     /**
