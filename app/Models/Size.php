@@ -5,15 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Color extends Model
+class Size extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'color'
+        'size'
     ];
-
-    public function colorVariant()
-    {
-        return $this->hasMany(ProductVariant::class, 'color_id');
-    }
 }

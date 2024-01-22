@@ -48,7 +48,7 @@
             <div class="col-lg-7 pb-5">
                 <h3 class="font-weight-semi-bold">{{ $product->title }}</h3>
 
-                <h3 class="font-weight-semi-bold mb-4">$150.00</h3>
+                <h3 class="font-weight-semi-bold mb-4">${{ $product->price }}</h3>
                 <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit clita
                     ea. Sanc invidunt ipsum et, labore clita lorem magna lorem ut. Erat lorem duo dolor no sea nonumy.
                     Accus labore stet, est lorem sit diam sea et justo, amet at lorem et eirmod ipsum diam et rebum kasd
@@ -89,7 +89,7 @@
                         @foreach ($colors as $color)
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="color-1" name="color">
-                                <label class="custom-control-label" for="color-1">{{ $color->color }}</label>
+                                <label class="custom-control-label" for="color-1">{{ $color->color->color }}</label>
                             </div>
                         @endforeach
                     </form>

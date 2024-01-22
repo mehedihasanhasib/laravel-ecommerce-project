@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -34,28 +35,39 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|max:255',
-            'category' => 'required',
-            'price' => 'required',
-            // 'stock' => 'required',
-            'color' => 'required'
-        ]);
-
+        // $request->validate([
+        //     'title' => 'required|max:255',
+        //     'category' => 'required',
+        //     'price' => 'required',
+        //     'category' => 'required',
+        //     'color' => 'required'
+        // ]);
 
         $data = $request->input();
-
-        // dump($data);
+        $colors = $request->input('color', []);
+        $category = Category::where('category', $data['category'])->first()->id;
 
         Product::create([
             'title' => $data['title'],
             'description' => $data['desc'],
-            'price' => $data['price']
+            'price' => $data['price'],
+            'category' => $category
         ]);
 
-        Color::create([
-            'color' => $data['color']
-        ]);
+        $product_id = Product::get()->last()->id;
+
+        foreach ($colors as $color) {
+            Color::updateOrInsert([
+                'color' => $color
+            ]);
+
+            $color_id = Color::where('color', $color)->first()->id;
+
+            ProductVariant::create([
+                'product_id' => $product_id,
+                'color_id' => $color_id
+            ]);
+        }
 
         return redirect()->route('shop');
     }
@@ -66,7 +78,8 @@ class ProductController extends Controller
     public function show($product_id)
     {
         $product = Product::find($product_id);
-        $colors = Color::all();
+        $colors = ProductVariant::with('color')->where('product_id', $product->id)->get();
+
         return view('pages.detail', ['product' => $product, 'colors' => $colors]);
     }
 
