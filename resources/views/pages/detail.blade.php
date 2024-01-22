@@ -44,7 +44,6 @@
             </div>
 
 
-            {{-- @foreach ($product as $attribute) --}}
             <div class="col-lg-7 pb-5">
                 <h3 class="font-weight-semi-bold">{{ $product->title }}</h3>
 
@@ -88,12 +87,15 @@
                     <form>
                         @foreach ($colors as $color)
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" class="custom-control-input" id="color-1" name="color">
-                                <label class="custom-control-label" for="color-1">{{ $color->color->color }}</label>
+                                <input type="radio" class="custom-control-input" id="color-{{ $color->color->id }}"
+                                    name="color">
+                                <label class="custom-control-label"
+                                    for="color-{{ $color->color->id }}">{{ $color->color->color }}</label>
                             </div>
                         @endforeach
                     </form>
                 </div>
+
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
@@ -110,6 +112,7 @@
                     </div>
                     <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
                 </div>
+
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
                     <div class="d-inline-flex">
@@ -128,11 +131,9 @@
                     </div>
                 </div>
             </div>
-            {{-- @endforeach --}}
-
-
-
         </div>
+
+
         <div class="row px-xl-5">
             <div class="col">
                 <div class="nav nav-tabs justify-content-center border-secondary mb-4">
