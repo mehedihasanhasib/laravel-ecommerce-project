@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -32,7 +33,12 @@ Route::get('checkout', function () {
     return view('pages.checkout');
 })->name('checkout');
 
-Route::get('/dashboard', [ProductController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::prefix('admin')->group(function () {
+    Route::get('login', [AdminController::class, 'login'])->name('admin.login');
+    Route::get('register', [AdminController::class, 'registration'])->name('admin.register');
+});
+
+Route::get('/dashboard', [ProductController::class, 'create'])->name('dashboard');
 
 Route::resource('/product', ProductController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])

@@ -79,8 +79,9 @@ class ProductController extends Controller
     {
         $product = Product::find($product_id);
         $colors = ProductVariant::with('color')->where('product_id', $product->id)->get();
+        $sizes = ProductVariant::with('size')->where('product_id', $product->id)->get();
 
-        return view('pages.detail', ['product' => $product, 'colors' => $colors]);
+        return view('pages.detail', ['product' => $product, 'colors' => $colors, 'sizes' => $sizes]);
     }
 
     /**
