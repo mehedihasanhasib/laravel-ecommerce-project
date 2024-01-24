@@ -27,7 +27,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
 
-        return view('dashboard', ['categories' => $categories]);
+        return view('admin.admin_index', ['categories' => $categories]);
     }
 
     /**
