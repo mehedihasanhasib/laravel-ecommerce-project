@@ -23,11 +23,16 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function addproduct()
     {
-        $categories = Category::all();
 
-        return view('admin.admin_index', ['categories' => $categories]);
+        $categories = Category::all();
+        return view('admin.add_product', ['categories' => $categories]);
+    }
+
+    public function dashboard()
+    {
+        return view('admin.admin_dashboard');
     }
 
     /**

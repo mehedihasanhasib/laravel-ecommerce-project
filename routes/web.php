@@ -36,9 +36,10 @@ Route::get('checkout', function () {
 Route::prefix('admin')->group(function () {
     Route::get('login', [AdminController::class, 'login'])->name('admin.login');
     Route::get('register', [AdminController::class, 'registration'])->name('admin.register');
+    Route::get('dashboard', [ProductController::class, 'dashboard'])->name('dashboard');
+    Route::get('addproduct', [ProductController::class, 'addproduct'])->name('addproduct');
 });
 
-Route::get('/dashboard', [ProductController::class, 'create'])->name('dashboard');
 
 Route::resource('/product', ProductController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
