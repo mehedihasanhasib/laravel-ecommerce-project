@@ -2,6 +2,10 @@
 @section('content')
     <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data" class="row">
         @csrf
+
+
+        <h3 style="color: green; text-align: center;">{{ Session::get('message') ?? null }}</h3>
+
         <div class="col-7">
             <!-- Product Information -->
             <div class="card mb-4">
@@ -42,8 +46,8 @@
                     {{-- price --}}
                     <div class="mb-3">
                         <label class="form-label" for="ecommerce-product-name">Price</label>
-                        <input type="number" class="form-control" id="ecommerce-product-name" placeholder="Product title"
-                            name="price" aria-label="title">
+                        <input type="number" class="form-control" id="ecommerce-product-name" placeholder="Price"
+                            name="price">
 
                         @error('price')
                             <p class="text-red-500">{{ $message }}</p>
@@ -142,7 +146,7 @@
 
                                     <div class="mt-1 col-4" data-select2-id="15">
                                         <input name="stock[]" type="number" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Color">
+                                            placeholder="Stock">
                                     </div>
 
                                     

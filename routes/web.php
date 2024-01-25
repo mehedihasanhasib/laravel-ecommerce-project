@@ -34,10 +34,11 @@ Route::get('checkout', function () {
 })->name('checkout');
 
 Route::prefix('admin')->group(function () {
-    Route::get('login', [AdminController::class, 'login'])->name('admin.login');
-    Route::get('register', [AdminController::class, 'registration'])->name('admin.register');
-    Route::get('dashboard', [ProductController::class, 'dashboard'])->name('dashboard');
-    Route::get('addproduct', [ProductController::class, 'addproduct'])->name('addproduct');
+    Route::get('login', [AdminController::class, 'index'])->name('admin.login');
+    Route::post('login', [AdminController::class, 'login'])->name('admin.log_in');
+    Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout')->middleware(['admin']);
+    Route::get('dashboard', [ProductController::class, 'dashboard'])->name('dashboard')->middleware(['admin']);
+    Route::get('addproduct', [ProductController::class, 'addproduct'])->name('addproduct')->middleware(['admin']);
 });
 
 

@@ -96,7 +96,7 @@ class ProductController extends Controller
             ]);
         }
 
-        // return redirect()->route('shop');
+        return redirect()->route('addproduct')->with('message', 'product added succesfully');
     }
 
     /**
