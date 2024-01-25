@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Color;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\Size;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -25,7 +26,6 @@ class ProductController extends Controller
      */
     public function addproduct()
     {
-
         $categories = Category::all();
         return view('admin.add_product', ['categories' => $categories]);
     }
@@ -44,13 +44,18 @@ class ProductController extends Controller
         //     'title' => 'required|max:255',
         //     'category' => 'required',
         //     'price' => 'required',
-        //     'category' => 'required',
-        //     'color' => 'required'
+        //     'color' => 'required',
+        //     'size' => 'required',
+        //     'stock' => 'required',
         // ]);
+
 
         $data = $request->input();
         $colors = $request->input('color', []);
+        $sizes = $request->input('size', []);
+        $stocks = $request->input('stock', []);
         $category = Category::where('category', $data['category'])->first()->id;
+
 
         Product::create([
             'title' => $data['title'],
@@ -59,22 +64,39 @@ class ProductController extends Controller
             'category' => $category
         ]);
 
-        $product_id = Product::get()->last()->id;
 
-        foreach ($colors as $color) {
+        $variants = array_map(function ($color, $size, $stock) {
+            return array(
+                'color' => $color,
+                'size' => $size,
+                'stock' => $stock
+            );
+        }, $colors, $sizes, $stocks);
+
+
+        $product_id = Product::get()->last()->id;
+        foreach ($variants as $variant) {
             Color::updateOrInsert([
-                'color' => $color
+                'color' => $variant['color']
             ]);
 
-            $color_id = Color::where('color', $color)->first()->id;
+            Size::updateOrInsert([
+                'size' => $variant['size']
+            ]);
+
+
+            $color_id = Color::where('color', $variant['color'])->first()->id;
+            $size_id = Size::where('size', $variant['size'])->first()->id;
 
             ProductVariant::create([
                 'product_id' => $product_id,
-                'color_id' => $color_id
+                'color_id' => $color_id,
+                'size_id' => $size_id,
+                'stock' => $variant['stock']
             ]);
         }
 
-        return redirect()->route('shop');
+        // return redirect()->route('shop');
     }
 
     /**

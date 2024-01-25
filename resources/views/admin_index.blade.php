@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Fluid - Layouts | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Admin Dashboard - Eshopper</title>
 
     <meta name="description" content="" />
 
@@ -534,7 +534,7 @@
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    <div class="container-fluid flex-grow-1 container-p-y">
+                    <div class="container-fluid flex-grow-1 row container-p-y">
                         @yield('content')
                     </div>
                 </div>
@@ -576,6 +576,8 @@
     </div>
     <!-- / Layout wrapper -->
 
+
+    @yield('script')
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->

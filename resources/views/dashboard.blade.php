@@ -22,8 +22,6 @@
 <body>
 
     {{-- nav starts here --}}
-
-
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
@@ -39,8 +37,7 @@
                 </ul>
             </div>
         </div>
-    </nav>
-    {{-- nav ends here --}}
+    </nav> {{-- nav ends here --}}
 
     <section class="bg-white dark:bg-gray-900">
         <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
@@ -66,7 +63,7 @@
                     {{-- product title ends here --}}
 
 
-                    {{-- <div>
+                    <div>
                         <label for="category"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
                         <select id="category"
@@ -76,7 +73,7 @@
                             @endforeach
                             <option selected="">Select category</option>
                         </select>
-                    </div> --}}
+                    </div>
 
 
                     {{-- price starts here --}}

@@ -41,7 +41,7 @@ Route::prefix('admin')->group(function () {
 });
 
 
-Route::resource('/product', ProductController::class)
+Route::resource('product', ProductController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
