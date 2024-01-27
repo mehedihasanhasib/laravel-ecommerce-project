@@ -15,4 +15,9 @@ class Product extends Model
         'price',
         'category'
     ];
+
+    public function productVariant()
+    {
+        return $this->hasMany(ProductVariant::class, 'product_id');
+    }
 }

@@ -126,6 +126,20 @@
                         </a>
                     </li>
 
+                    <li class="menu-item {{ $productlist ?? null }}">
+                        <a href="{{ route('productlist') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div data-i18n="Analytics">Products</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="{{ route('shop') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div data-i18n="Analytics">Shop</div>
+                        </a>
+                    </li>
+
                     {{-- <!-- Layouts -->
                     <li class="menu-item active open">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -538,7 +552,7 @@
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-                    <div class="container-fluid flex-grow-1 row container-p-y">
+                    <div class="container-fluid">
                         @yield('content')
                     </div>
                 </div>

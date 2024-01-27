@@ -17,8 +17,13 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-
         return view('pages.shop', ['products' => $products]);
+    }
+
+    public function productlist()
+    {
+        $products = Product::all();
+        return view('admin.product_list', ['products' => $products]);
     }
 
     /**
@@ -27,7 +32,9 @@ class ProductController extends Controller
     public function addproduct()
     {
         $categories = Category::all();
-        return view('admin.add_product', ['categories' => $categories]);
+        $sizes = Size::all();
+        $colors = Color::all();
+        return view('admin.add_product', ['categories' => $categories, 'colors' => $colors, 'sizes' => $sizes]);
     }
 
     public function dashboard()
@@ -40,30 +47,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'title' => 'required|max:255',
-        //     'category' => 'required',
-        //     'price' => 'required',
-        //     'color' => 'required',
-        //     'size' => 'required',
-        //     'stock' => 'required',
-        // ]);
-
-
-        $data = $request->input();
-        $colors = $request->input('color', []);
-        $sizes = $request->input('size', []);
-        $stocks = $request->input('stock', []);
-        $category = Category::where('category', $data['category'])->first()->id;
-
-
-        Product::create([
-            'title' => $data['title'],
-            'description' => $data['desc'],
-            'price' => $data['price'],
-            'category' => $category
+        $data = $request->validate([
+            'title' => 'required|max:255',
+            'category' => 'required',
+            'description' => 'max:500',
+            'price' => 'required',
+            'color.*' => 'required',
+            'size.*' => 'required',
+            'stock.*' => 'required'
         ]);
 
+        $product = Product::create($data);
 
         $variants = array_map(function ($color, $size, $stock) {
             return array(
@@ -71,10 +65,11 @@ class ProductController extends Controller
                 'size' => $size,
                 'stock' => $stock
             );
-        }, $colors, $sizes, $stocks);
+        }, $data['color'], $data['size'], $data['stock']);
+
+        $product_id = $product->id;
 
 
-        $product_id = Product::get()->last()->id;
         foreach ($variants as $variant) {
             Color::updateOrInsert([
                 'color' => $variant['color']
@@ -83,7 +78,6 @@ class ProductController extends Controller
             Size::updateOrInsert([
                 'size' => $variant['size']
             ]);
-
 
             $color_id = Color::where('color', $variant['color'])->first()->id;
             $size_id = Size::where('size', $variant['size'])->first()->id;
@@ -105,8 +99,9 @@ class ProductController extends Controller
     public function show($product_id)
     {
         $product = Product::find($product_id);
-        $colors = ProductVariant::with('color')->where('product_id', $product->id)->get();
-        $sizes = ProductVariant::with('size')->where('product_id', $product->id)->get();
+        $colors = ProductVariant::with('color')->where('product_id', $product->id)->get()->unique('color.id');
+        $sizes = ProductVariant::with('size')->where('product_id', $product->id)->get()->unique('size.id');
+
 
         return view('pages.detail', ['product' => $product, 'colors' => $colors, 'sizes' => $sizes]);
     }

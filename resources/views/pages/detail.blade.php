@@ -52,59 +52,64 @@
                     ea. Sanc invidunt ipsum et, labore clita lorem magna lorem ut. Erat lorem duo dolor no sea nonumy.
                     Accus labore stet, est lorem sit diam sea et justo, amet at lorem et eirmod ipsum diam et rebum kasd
                     rebum.</p>
-
-
-
-
                 {{-- colors option --}}
 
-                <form>
+                <form action="{{ route('addcart', ['id' => $product->id]) }}" method="POST">
+                    @csrf
                     {{-- sizes option --}}
                     <div class="d-flex mb-3">
                         <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
-
                         @foreach ($sizes as $size)
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="size-{{ $size->size->id }}"
-                                    name="size">
+                                    name="size" value="{{ $size->size->id }}">
                                 <label class="custom-control-label"
                                     for="size-{{ $size->size->id }}">{{ $size->size->size }}</label>
                             </div>
                         @endforeach
-
-
                     </div>
+                    {{-- size option ends --}}
 
+
+                    {{-- color option --}}
                     <div class="d-flex mb-4">
                         <p class="text-dark font-weight-medium mb-0 mr-3">Colors:</p>
                         @foreach ($colors as $color)
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="color-{{ $color->color->id }}"
-                                    name="color">
+                                    name="color" value="{{ $color->color->id }}">
                                 <label class="custom-control-label"
                                     for="color-{{ $color->color->id }}">{{ $color->color->color }}</label>
                             </div>
                         @endforeach
                     </div>
+                    {{-- color option ends --}}
+
+
+                    {{-- add cart starts --}}
+                    <div class="d-flex align-items-center mb-4 pt-2">
+                        <div class="input-group quantity mr-3" style="width: 130px;">
+                            <div class="input-group-btn">
+                                <button onclick="event.preventDefault();" class="btn btn-primary btn-minus">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <input type="text" class="form-control bg-secondary text-center" value="1"
+                                name="quantity">
+                            <div class="input-group-btn">
+                                <button onclick="event.preventDefault();" class="btn btn-primary btn-plus">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                        <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                    </div>
+                    {{-- add cart ends --}}
                 </form>
 
-
-                <div class="d-flex align-items-center mb-4 pt-2">
-                    <div class="input-group quantity mr-3" style="width: 130px;">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <input type="text" class="form-control bg-secondary text-center" value="1">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
-                </div>
 
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>

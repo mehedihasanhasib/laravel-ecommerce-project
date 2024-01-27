@@ -58,7 +58,7 @@
                 </a> --}}
                 <a href="{{ route('cart') }}" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge">{{ Session::has('cart') ? count(session('cart')) : 0 }}</span>
                 </a>
             </div>
         </div>
@@ -106,17 +106,14 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="{{ route('index') }}" class="nav-item nav-link active">Home</a>
-                            <a href="{{ route('shop') }}" class="nav-item nav-link">Shop</a>
-                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
-                                </div>
-                            </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            <a href="{{ route('index') }}" class="nav-item nav-link {{ $home ?? null }}">Home</a>
+                            <a href="{{ route('shop') }}" class="nav-item nav-link {{ $shop ?? null }}">Shop</a>
+                            {{-- <a href="detail.html" class="nav-item nav-link">Shop Detail</a> --}}
+                            <a href="{{ route('cart') }}" class="nav-item nav-link {{ $cart ?? null }}">Shopping
+                                Cart</a>
+                            <a href="{{ route('checkout') }}"
+                                class="nav-item nav-link {{ $checkout ?? null }}">Checkout</a>
+                            {{-- <a href="contact.html" class="nav-item nav-link">Contact</a> --}}
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             @if (Route::has('login'))

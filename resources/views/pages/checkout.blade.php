@@ -1,4 +1,4 @@
-@extends('index')
+@extends('home', ['checkout' => 'active'])
 
 @section('content')
     <!-- Page Header Start -->

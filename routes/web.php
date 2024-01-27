@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +27,8 @@ Route::get('cart', function () {
     return view('pages.cart');
 })->name('cart');
 
+Route::post('addcart/{id}', [OrderController::class, 'addcart'])->middleware(['auth', 'verified'])->name('addcart');
+
 Route::get('detail/{product_id}', [ProductController::class, 'show'])->name('detail');
 
 Route::get('shop', [ProductController::class, 'index'])->name('shop');
@@ -33,18 +37,22 @@ Route::get('checkout', function () {
     return view('pages.checkout');
 })->name('checkout');
 
+
+/* Admin Routes */
 Route::prefix('admin')->group(function () {
     Route::get('login', [AdminController::class, 'index'])->name('admin.login');
     Route::post('login', [AdminController::class, 'login'])->name('admin.log_in');
     Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout')->middleware(['admin']);
     Route::get('dashboard', [ProductController::class, 'dashboard'])->name('dashboard')->middleware(['admin']);
     Route::get('addproduct', [ProductController::class, 'addproduct'])->name('addproduct')->middleware(['admin']);
+    Route::get('productlist', [ProductController::class, 'productlist'])->name('productlist')->middleware(['admin']);
 });
+/* Admin Routes */
 
 
 Route::resource('product', ProductController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
+    ->middleware(['admin']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

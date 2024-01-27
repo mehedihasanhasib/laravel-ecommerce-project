@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('product_variants', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->unsignedBigInteger('color_id');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->unsignedBigInteger('color_id')->nullable();
             $table->foreign('color_id')->references('id')->on('colors');
             $table->unsignedBigInteger('size_id')->nullable();
             $table->foreign('size_id')->references('id')->on('sizes');
