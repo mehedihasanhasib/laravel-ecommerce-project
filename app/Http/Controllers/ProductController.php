@@ -23,17 +23,20 @@ class ProductController extends Controller
     public function productlist()
     {
         $products = Product::all();
-        return view('admin.product_list', ['products' => $products]);
+        $stock = ProductVariant::all();
+
+        return view('admin.product_list', ['products' => $products, 'stocks' => $stock]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new product.
      */
     public function addproduct()
     {
         $categories = Category::all();
         $sizes = Size::all();
         $colors = Color::all();
+
         return view('admin.add_product', ['categories' => $categories, 'colors' => $colors, 'sizes' => $sizes]);
     }
 
@@ -43,14 +46,14 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created product in storage.
      */
     public function store(Request $request)
     {
         $data = $request->validate([
             'title' => 'required|max:255',
             'category' => 'required',
-            'description' => 'max:500',
+            'description' => '',
             'price' => 'required',
             'color.*' => 'required',
             'size.*' => 'required',
@@ -68,7 +71,6 @@ class ProductController extends Controller
         }, $data['color'], $data['size'], $data['stock']);
 
         $product_id = $product->id;
-
 
         foreach ($variants as $variant) {
             Color::updateOrInsert([
@@ -102,7 +104,6 @@ class ProductController extends Controller
         $colors = ProductVariant::with('color')->where('product_id', $product->id)->get()->unique('color.id');
         $sizes = ProductVariant::with('size')->where('product_id', $product->id)->get()->unique('size.id');
 
-
         return view('pages.detail', ['product' => $product, 'colors' => $colors, 'sizes' => $sizes]);
     }
 
@@ -127,6 +128,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        Product::find($product->id)->delete();
+
+        return redirect()->route('productlist')->with('success', 'Product deleted successfully');
     }
 }

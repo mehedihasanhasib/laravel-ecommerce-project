@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('color_id')->references('id')->on('colors');
             $table->unsignedBigInteger('size_id')->nullable();
             $table->foreign('size_id')->references('id')->on('sizes');
-            $table->integer('stock')->unsigned()->default(0);
+            $table->integer('stock')->default(0);
             $table->timestamps();
         });
     }

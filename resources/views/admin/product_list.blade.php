@@ -1,18 +1,22 @@
 @extends('admin_index', ['productlist' => 'active'])
 @section('content')
-    <div class="mt-3">
+    <h3 style="color: red; text-align: center; margin-top: 7px">{{ session('success') ?? null }}</h3>
+
+    <div class="">
         <table class="table align-middle mb-0 bg-white">
             <thead class="bg-light">
                 <tr>
                     <th>Product Title</th>
                     <th>Price</th>
-                    {{-- <th>Status</th> --}}
-                    <th style="text-align: center">Actions</th>
+                    <th style="padding-left: 50px">Stock</th>
+                    <th style="padding-left: 50px">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($products as $product)
                     <tr>
+
+                        {{-- title --}}
                         <td>
                             <div class="d-flex align-items-center">
                                 <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
@@ -23,19 +27,53 @@
                                 </div>
                             </div>
                         </td>
+
+                        {{-- stock --}}
                         <td>
                             <p class="fw-normal mb-1">$ {{ $product->price }}</p>
                             {{-- <p class="text-muted mb-0">IT department</p> --}}
                         </td>
-                        <td>
-                            <a class="btn btn-success">
-                                Edit
-                            </a>
 
-                            <a class="btn btn-danger">
-                                Delete
-                            </a>
+
+                        {{-- stock --}}
+                        <td style="padding-left: 35px">
+                            @foreach ($stocks as $stock)
+                                @if ($stock->product_id == $product->id)
+                                    <p class="fw-normal mb-1">
+                                        Size : {{ $stock->size->size }}
+                                    </p>
+                                    <p class="fw-normal mb-1">
+                                        Color : {{ $stock->color->color }}
+                                    </p>
+                                    <p class="fw-normal mb-1">
+                                        Stock : {{ $stock['stock'] }}
+                                    </p>
+                                @endif
+                            @endforeach
                         </td>
+
+
+                        {{-- action button --}}
+                        <td style="">
+                            <form action="" method="POST" style="display: inline-block">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-success">
+                                    Edit
+                                </button>
+                            </form>
+
+                            <form action="{{ route('product.destroy', ['product' => $product->id]) }}" method="POST"
+                                style="display: inline-block">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger">
+
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+
                     </tr>
                 @endforeach
 

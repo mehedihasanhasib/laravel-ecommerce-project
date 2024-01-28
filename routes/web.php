@@ -47,12 +47,14 @@ Route::prefix('admin')->group(function () {
     Route::get('addproduct', [ProductController::class, 'addproduct'])->name('addproduct')->middleware(['admin']);
     Route::get('productlist', [ProductController::class, 'productlist'])->name('productlist')->middleware(['admin']);
 });
-/* Admin Routes */
-
 
 Route::resource('product', ProductController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['admin']);
+/* Admin Routes */
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
