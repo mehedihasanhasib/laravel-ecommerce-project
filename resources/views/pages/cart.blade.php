@@ -35,17 +35,18 @@
                         @if (Session::has('cart'))
                             @foreach (session('cart') as $item)
                                 <tr>
-                                    <td class="align-middle">
-                                        <img src="img/product-1.jpg" alt="" style="width: 50px;">
-                                        {{ $item['title'] }}
-
+                                    <td class="align-middle d-flex items-center">
+                                        <div>
+                                            <img src="img/product-1.jpg" alt="" style="width: 50px;">
+                                            {{ $item['title'] }}
+                                        </div>
                                     </td>
 
                                     {{-- <td class="align-middle">{{ $item['size'] }}</td>
 
                                     <td class="align-middle">{{ session('cartItem')['color'] ?? null }}</td> --}}
 
-                                    <td class="align-middle">{{ $item['price'] }}</td>
+                                    <td class="align-middle">$ {{ $item['price'] }}</td>
 
                                     <td class="align-middle">
                                         <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -65,8 +66,14 @@
                                         </div>
                                     </td>
                                     {{-- <td class="align-middle">$150</td> --}}
-                                    <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                                class="fa fa-times"></i></button></td>
+                                    <td class="align-middle">
+                                        <form action="{{ route('deleteCartItem', ['id' => $item['id']]) }}" method="POST">
+                                            @csrf
+                                            <button class="btn btn-sm btn-primary">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         @else
@@ -198,7 +205,13 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-3 pt-1">
                             <h6 class="font-weight-medium">Subtotal</h6>
-                            <h6 class="font-weight-medium">$150</h6>
+                            <h6 class="font-weight-medium">
+                                @if (Session::has('cart'))
+                                    {{ array_sum(array_column(session('cart'), 'price')) ?? 0 }}
+                                @else
+                                    0
+                                @endif
+                            </h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
@@ -210,7 +223,9 @@
                             <h5 class="font-weight-bold">Total</h5>
                             <h5 class="font-weight-bold">$160</h5>
                         </div>
-                        <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+
+                        <a href="{{ route('checkout') }}" class="btn btn-block btn-primary my-3 py-3">Proceed To
+                            Checkout</a>
                     </div>
                 </div>
             </div>

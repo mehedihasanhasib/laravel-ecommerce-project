@@ -28,11 +28,13 @@
                             </div>
                         </td>
 
-                        {{-- stock --}}
+                        {{-- price --}}
                         <td>
                             <p class="fw-normal mb-1">$ {{ $product->price }}</p>
                             {{-- <p class="text-muted mb-0">IT department</p> --}}
                         </td>
+
+
 
 
                         {{-- stock --}}
@@ -40,13 +42,8 @@
                             @foreach ($stocks as $stock)
                                 @if ($stock->product_id == $product->id)
                                     <p class="fw-normal mb-1">
-                                        Size : {{ $stock->size->size }}
-                                    </p>
-                                    <p class="fw-normal mb-1">
-                                        Color : {{ $stock->color->color }}
-                                    </p>
-                                    <p class="fw-normal mb-1">
-                                        Stock : {{ $stock['stock'] }}
+                                        {{ $stock->color->color }} : {{ $stock->size->size }} :
+                                        {{ $stock['stock'] }}
                                     </p>
                                 @endif
                             @endforeach

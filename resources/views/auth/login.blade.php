@@ -31,6 +31,10 @@
                                 </h1>
 
                             </header>
+
+                            @error('password')
+                                <h3 style="color: red">{{ $message }}</h3>
+                            @enderror
                             <!-- END Header -->
                             <form class="space-y-6" method="POST" action="{{ route('login') }}">
                                 @csrf
@@ -39,6 +43,7 @@
                                     <input type="email" id="email" name="email" placeholder="Enter your email"
                                         class="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500" />
                                 </div>
+
                                 {{-- <span>{{ $error->email }}</span> --}}
                                 <div class="space-y-1">
                                     <label for="password" class="text-sm font-medium">Password</label>

@@ -16,6 +16,7 @@ class OrderController extends Controller
         $product = Product::find($id);
         $cartItem = session('cart', []);
         $newItem = [
+            'id' => $product['id'],
             'title' => $product['title'],
             'price' => $product['price'],
             'color' => $request->input('color'),
@@ -27,5 +28,12 @@ class OrderController extends Controller
         session(['cart' => $cartItem]);
 
         return redirect(route('cart'));
+    }
+
+    public function deleteCartItem(Request $request, $id)
+    {
+        session()->forget('cart.' . $id);
+
+        return redirect()->route('cart');
     }
 }

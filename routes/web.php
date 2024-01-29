@@ -28,6 +28,7 @@ Route::get('cart', function () {
 })->name('cart');
 
 Route::post('addcart/{id}', [OrderController::class, 'addcart'])->middleware(['auth', 'verified'])->name('addcart');
+Route::post('deleteCartItem/{id}', [OrderController::class, 'deleteCartItem'])->middleware(['auth', 'verified'])->name('deleteCartItem');
 
 Route::get('detail/{product_id}', [ProductController::class, 'show'])->name('detail');
 

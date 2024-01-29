@@ -24,7 +24,6 @@ class ProductController extends Controller
     {
         $products = Product::all();
         $stock = ProductVariant::all();
-
         return view('admin.product_list', ['products' => $products, 'stocks' => $stock]);
     }
 
