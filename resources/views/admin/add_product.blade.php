@@ -2,7 +2,6 @@
 @section('content')
     <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data" class="row">
         @csrf
-
         <h3 style="color: green; text-align: center;">{{ Session::get('message') ?? null }}</h3>
 
         <div class="col-lg-7 col-sm">
@@ -58,18 +57,19 @@
                         @enderror
                     </div>
 
-                    <!-- Media -->
-                    {{-- <div class="mb-3">
-                        <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-                        <input name="images" class="form-control" type="file" id="formFileMultiple" multiple />
-                        @error('images')
+                    {{-- image upload --}}
+                    <div class="mb-3">
+                        <label for="formFileMultiple" class="form-label">Upload Images</label>
+                        <input name="images[]" class="form-control" type="file" multiple />
+
+                        {{-- @error('images')
                             <p class="text-red-500">{{ $message }}</p>
-                        @enderror
+                        @enderror --}}
 
                         @error('images')
                             <p style="color: red">{{ $message }}</p>
                         @enderror
-                    </div> --}}
+                    </div>
 
 
                     {{-- categories --}}
@@ -94,58 +94,60 @@
 
                     <div class="form-repeater" id="variant-container">
 
-                        <div data-repeater-list="group-a" data-select2-id="18">
-                            <div data-repeater-item="" data-select2-id="17">
-                                <div class="row" data-select2-id="16">
+                        {{--  Variants  --}}
+                        <label class="form-label" for="ecommerce-product-name">Variants</label>
+                        <div class="d-flex">
+                            <div style="padding-right: 4px">
+                                <button class="btn btn-primary btn-sm" id="add-variant">
+                                    Add More Varient
+                                </button>
+                            </div>
+                            <div class="inline-block">
+                                <button class="btn btn-primary btn-sm" id="custom-variant">
+                                    Add Custom Varient
+                                </button>
+                            </div>
+                        </div>
+                        {{-- variants ends --}}
 
-                                    <!-- Variants -->
-                                    <label class="form-label" for="ecommerce-product-name">Variants</label>
-                                    <div class="d-flex">
-                                        <div style="padding-right: 4px">
-                                            <button class="btn btn-primary btn-sm" id="add-variant">
-                                                Add More Varient
-                                            </button>
-                                        </div>
-                                        <div class="inline-block">
-                                            <button class="btn btn-primary btn-sm" id="custom-variant">
-                                                Add Custom Varient
-                                            </button>
-                                        </div>
-                                    </div>
+                        <div id="default">
 
-                                    <div class="mt-2 col-4" data-select2-id="15">
+                            <div class="row">
 
-                                        <select name="color[]" class="form-select">
-                                            <option selected value="">Color</option>
-                                            @foreach ($colors as $color)
-                                                <option value="{{ $color->color }}">{{ $color->color }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        {{-- <input name="color[]" type="text" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Color"> --}}
-                                    </div>
+                                <div class="mt-2 col-4">
 
-                                    <div class="mt-2 col-4" data-select2-id="15">
-
-                                        <select name="size[]" class="form-select">
-                                            <option selected value="">Size</option>
-                                            @foreach ($sizes as $size)
-                                                <option value="{{ $size->size }}">{{ $size->size }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        {{-- <input name="size[]" type="text" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Size"> --}}
-                                    </div>
-
-                                    <div class="mt-2 col-4" data-select2-id="15">
-                                        <input name="stock[]" type="number" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Stock">
-                                    </div>
-
+                                    <select name="color[]" class="form-select">
+                                        <option selected value="">Color</option>
+                                        @foreach ($colors as $color)
+                                            <option value="{{ $color->color }}">{{ $color->color }}
+                                            </option>
+                                        @endforeach
+                                    </select>
 
                                 </div>
+
+                                <div class="mt-2 col-3">
+
+                                    <select name="size[]" class="form-select">
+                                        <option selected value="">Size</option>
+                                        @foreach ($sizes as $size)
+                                            <option value="{{ $size->size }}">{{ $size->size }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+
+                                <div class="mt-2 col-4">
+                                    <input name="stock[]" type="number" id="form-repeater-1-2" class="form-control"
+                                        placeholder="Stock">
+                                </div>
+
+
+                                <button onclick="deleteElement('default')" type="button"
+                                    class="mt-3 col-1 btn-close"></button>
+
+
                             </div>
                         </div>
 
@@ -154,8 +156,6 @@
                         @error('stock*')
                             <p style="color: red">The stock field is required.</p>
                         @enderror
-
-
 
                     </div> <!-- /Variants -->
 
@@ -170,51 +170,23 @@
 
 @section('script')
     <script>
-        document.getElementById("custom-variant").addEventListener("click", function(event) {
-            event.preventDefault();
-            console.log("hello");
-
-            let input = document.createElement("div");
-            input.innerHTML = `
-                        <div data-repeater-list="group-a" data-select2-id="18">
-                            <div data-repeater-item="" data-select2-id="17">
-                                <div class="row" data-select2-id="16">
-
-                                    <div class="mt-1 col-4" data-select2-id="15">
-                                        <input name="color[]" type="text" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Color">
-                                    </div>
-
-                                    <div class="mt-1 col-4" data-select2-id="15">
-                                        <input name="size[]" type="text" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Size">
-                                    </div>
-
-                                    <div class="mt-1 col-4" data-select2-id="15">
-                                        <input name="stock[]" type="number" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Stock">
-                                    </div>
-
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        `;
-            document.getElementById("variant-container").appendChild(input);
-        });
-
+        let id1 = 0;
+        let id2 = 0;
 
         document.getElementById("add-variant").addEventListener("click", function(event) {
             event.preventDefault();
-            console.log("hello");
 
+            id1++
+            id2++
+
+            // console.log(id1);
             let input = document.createElement("div");
             input.innerHTML = `
-                        <div data-repeater-list="group-a" data-select2-id="18">
-                            <div data-repeater-item="" data-select2-id="17">
-                                <div class="row" data-select2-id="16">
+                        <div id="${id1}">
+                            
+                                <div class="row">
 
-                                    <div class="mt-1 col-4" data-select2-id="15">
+                                    <div class="mt-1 col-4">
                                         <select name="color[]" class="form-select">
                                             <option selected value="">Color</option>
                                             @foreach ($colors as $color)
@@ -224,7 +196,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="mt-1 col-4" data-select2-id="15">
+                                    <div class="mt-1 col-3">
                                         <select name="size[]" class="form-select">
                                             <option selected value="">Size</option>
                                             @foreach ($sizes as $size)
@@ -234,17 +206,59 @@
                                         </select>
                                     </div>
 
-                                    <div class="mt-1 col-4" data-select2-id="15">
+                                    <div class="mt-1 col-4">
                                         <input name="stock[]" type="number" id="form-repeater-1-2" class="form-control"
                                             placeholder="Stock">
                                     </div>
 
-                                    
+                                    <button onclick="deleteElement(${id1})" type="button" class="mt-3 col-1 btn-close"></button>
+                                   
                                 </div>
-                            </div>
+                           
                         </div>
                         `;
             document.getElementById("variant-container").appendChild(input);
         });
+
+
+        document.getElementById("custom-variant").addEventListener("click", function(event) {
+            event.preventDefault();
+
+            id1++
+            id2++
+
+            let input = document.createElement("div");
+            input.innerHTML = `
+                        <div id="${id2}">
+                            
+                                <div class="row">
+
+                                    <div class="mt-1 col-4">
+                                        <input name="color[]" type="text" id="form-repeater-1-2" class="form-control"
+                                            placeholder="Color">
+                                    </div>
+
+                                    <div class="mt-1 col-3">
+                                        <input name="size[]" type="text" id="form-repeater-1-2" class="form-control"
+                                            placeholder="Size">
+                                    </div>
+
+                                    <div class="mt-1 col-4">
+                                        <input name="stock[]" type="number" id="form-repeater-1-2" class="form-control"
+                                            placeholder="Stock">
+                                    </div>
+                                    
+                                    <button onclick="deleteElement(${id2})" type="button" class="mt-3 col-1 btn-close"></button>
+                                      
+                                </div>
+                           
+                        </div>
+                        `;
+            document.getElementById("variant-container").appendChild(input);
+        });
+
+        function deleteElement(id) {
+            document.getElementById(id).remove();
+        }
     </script>
 @endsection

@@ -22,9 +22,10 @@
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner border">
                         <div class="carousel-item active">
-                            <img class="w-100 h-100" src="{{ asset('img/product-1.jpg') }}" alt="Image">
+                            <img class="w-100 h-100" src="{{ asset('images/sqo1WXwXFEqTQQQiXPYem0U4LyK9V0ibJw0CVheW.jpg') }}"
+                                alt="Image">
                         </div>
-                        <div class="carousel-item">
+                        {{-- <div class="carousel-item">
                             <img class="w-100 h-100" src="{{ asset('img/product-2.jpg') }}" alt="Image">
                         </div>
                         <div class="carousel-item">
@@ -32,7 +33,7 @@
                         </div>
                         <div class="carousel-item">
                             <img class="w-100 h-100" src="{{ asset('img/product-4.jpg') }}" alt="Image">
-                        </div>
+                        </div> --}}
                     </div>
                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                         <i class="fa fa-2x fa-angle-left text-dark"></i>

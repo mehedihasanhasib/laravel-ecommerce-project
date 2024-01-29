@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Size;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -54,44 +55,55 @@ class ProductController extends Controller
             'category' => 'required',
             'description' => '',
             'price' => 'required',
+            'images.*' => 'image|mimes:jpeg,png,jpg|max:10000',
             'color.*' => 'required',
             'size.*' => 'required',
             'stock.*' => 'required'
         ]);
 
-        $product = Product::create($data);
+        // $path = $request->file('images')->store('public/images');
 
-        $variants = array_map(function ($color, $size, $stock) {
-            return array(
-                'color' => $color,
-                'size' => $size,
-                'stock' => $stock
-            );
-        }, $data['color'], $data['size'], $data['stock']);
-
-        $product_id = $product->id;
-
-        foreach ($variants as $variant) {
-            Color::updateOrInsert([
-                'color' => $variant['color']
-            ]);
-
-            Size::updateOrInsert([
-                'size' => $variant['size']
-            ]);
-
-            $color_id = Color::where('color', $variant['color'])->first()->id;
-            $size_id = Size::where('size', $variant['size'])->first()->id;
-
-            ProductVariant::create([
-                'product_id' => $product_id,
-                'color_id' => $color_id,
-                'size_id' => $size_id,
-                'stock' => $variant['stock']
-            ]);
+        foreach ($data['images'] as $image) {
+            // $filename = time() . $image;
+            // $path = Storage::putFile('public/images', $image);
+            dump($image);
         }
 
-        return redirect()->route('addproduct')->with('message', 'product added succesfully');
+
+
+        // $product = Product::create($data);
+
+        // $variants = array_map(function ($color, $size, $stock) {
+        //     return array(
+        //         'color' => $color,
+        //         'size' => $size,
+        //         'stock' => $stock
+        //     );
+        // }, $data['color'], $data['size'], $data['stock']);
+
+        // $product_id = $product->id;
+
+        // foreach ($variants as $variant) {
+        //     Color::updateOrInsert([
+        //         'color' => $variant['color']
+        //     ]);
+
+        //     Size::updateOrInsert([
+        //         'size' => $variant['size']
+        //     ]);
+
+        //     $color_id = Color::where('color', $variant['color'])->first()->id;
+        //     $size_id = Size::where('size', $variant['size'])->first()->id;
+
+        //     ProductVariant::create([
+        //         'product_id' => $product_id,
+        //         'color_id' => $color_id,
+        //         'size_id' => $size_id,
+        //         'stock' => $variant['stock']
+        //     ]);
+        // }
+
+        // return redirect()->route('addproduct')->with('message', 'product added succesfully');
     }
 
     /**
