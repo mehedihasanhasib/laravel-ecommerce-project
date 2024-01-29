@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Size;
@@ -61,49 +62,47 @@ class ProductController extends Controller
             'stock.*' => 'required'
         ]);
 
-        // $path = $request->file('images')->store('public/images');
+        $product = Product::create($data);
 
-        foreach ($data['images'] as $image) {
-            // $filename = time() . $image;
-            // $path = Storage::putFile('public/images', $image);
-            dump($image);
+        $variants = array_map(function ($color, $size, $stock) {
+            return array(
+                'color' => $color,
+                'size' => $size,
+                'stock' => $stock
+            );
+        }, $data['color'], $data['size'], $data['stock']);
+
+        $product_id = $product->id;
+
+        foreach ($variants as $variant) {
+            Color::updateOrInsert([
+                'color' => $variant['color']
+            ]);
+
+            Size::updateOrInsert([
+                'size' => $variant['size']
+            ]);
+
+            $color_id = Color::where('color', $variant['color'])->first()->id;
+            $size_id = Size::where('size', $variant['size'])->first()->id;
+
+            ProductVariant::create([
+                'product_id' => $product_id,
+                'color_id' => $color_id,
+                'size_id' => $size_id,
+                'stock' => $variant['stock']
+            ]);
         }
 
+        foreach ($data['images'] as $image) {
+            $path = Storage::putFile('product_images', $image);
+            Image::create([
+                'product_id' => $product_id,
+                'image_path' => $path
+            ]);
+        }
 
-
-        // $product = Product::create($data);
-
-        // $variants = array_map(function ($color, $size, $stock) {
-        //     return array(
-        //         'color' => $color,
-        //         'size' => $size,
-        //         'stock' => $stock
-        //     );
-        // }, $data['color'], $data['size'], $data['stock']);
-
-        // $product_id = $product->id;
-
-        // foreach ($variants as $variant) {
-        //     Color::updateOrInsert([
-        //         'color' => $variant['color']
-        //     ]);
-
-        //     Size::updateOrInsert([
-        //         'size' => $variant['size']
-        //     ]);
-
-        //     $color_id = Color::where('color', $variant['color'])->first()->id;
-        //     $size_id = Size::where('size', $variant['size'])->first()->id;
-
-        //     ProductVariant::create([
-        //         'product_id' => $product_id,
-        //         'color_id' => $color_id,
-        //         'size_id' => $size_id,
-        //         'stock' => $variant['stock']
-        //     ]);
-        // }
-
-        // return redirect()->route('addproduct')->with('message', 'product added succesfully');
+        return redirect()->route('addproduct')->with('message', 'product added succesfully');
     }
 
     /**
@@ -112,10 +111,16 @@ class ProductController extends Controller
     public function show($product_id)
     {
         $product = Product::find($product_id);
+        $images = Image::where('product_id', $product_id)->get();
         $colors = ProductVariant::with('color')->where('product_id', $product->id)->get()->unique('color.id');
         $sizes = ProductVariant::with('size')->where('product_id', $product->id)->get()->unique('size.id');
 
-        return view('pages.detail', ['product' => $product, 'colors' => $colors, 'sizes' => $sizes]);
+        return view('pages.detail', [
+            'product' => $product,
+            'colors' => $colors,
+            'sizes' => $sizes,
+            'images' => $images
+        ]);
     }
 
     /**

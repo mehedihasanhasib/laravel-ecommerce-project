@@ -21,10 +21,21 @@
             <div class="col-lg-5 pb-5">
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner border">
-                        <div class="carousel-item active">
-                            <img class="w-100 h-100" src="{{ asset('images/sqo1WXwXFEqTQQQiXPYem0U4LyK9V0ibJw0CVheW.jpg') }}"
-                                alt="Image">
-                        </div>
+
+                        @foreach ($images as $key => $image)
+                            @if ($key == 0)
+                                <div class="carousel-item active">
+                                    <img class="w-100 h-100" src="{{ asset('product_images/' . $image->image_path) }}"
+                                        alt="Image">
+                                </div>
+                            @else
+                                <div class="carousel-item">
+                                    <img class="w-100 h-100" src="{{ asset('product_images/' . $image->image_path) }}"
+                                        alt="Image">
+                                </div>
+                            @endif
+                        @endforeach
+
                         {{-- <div class="carousel-item">
                             <img class="w-100 h-100" src="{{ asset('img/product-2.jpg') }}" alt="Image">
                         </div>

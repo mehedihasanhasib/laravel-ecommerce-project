@@ -2,7 +2,7 @@
 @section('content')
     <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data" class="row">
         @csrf
-        <h3 style="color: green; text-align: center;">{{ Session::get('message') ?? null }}</h3>
+        <h3 style="color: green; text-align: center; margin-top: 5px">{{ Session::get('message') ?? null }}</h3>
 
         <div class="col-lg-7 col-sm">
             <!-- Product Information -->

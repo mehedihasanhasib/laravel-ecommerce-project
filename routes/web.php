@@ -27,12 +27,19 @@ Route::get('cart', function () {
     return view('pages.cart');
 })->name('cart');
 
-Route::post('addcart/{id}', [OrderController::class, 'addcart'])->middleware(['auth', 'verified'])->name('addcart');
-Route::post('deleteCartItem/{id}', [OrderController::class, 'deleteCartItem'])->middleware(['auth', 'verified'])->name('deleteCartItem');
+Route::post('addcart/{id}', [OrderController::class, 'addcart'])
+    ->middleware(['auth', 'verified'])
+    ->name('addcart');
 
-Route::get('detail/{product_id}', [ProductController::class, 'show'])->name('detail');
+Route::post('deleteCartItem/{id}', [OrderController::class, 'deleteCartItem'])
+    ->middleware(['auth', 'verified'])
+    ->name('deleteCartItem');
 
-Route::get('shop', [ProductController::class, 'index'])->name('shop');
+Route::get('detail/{product_id}', [ProductController::class, 'show'])
+    ->name('detail');
+
+Route::get('shop', [ProductController::class, 'index'])
+    ->name('shop');
 
 Route::get('checkout', function () {
     return view('pages.checkout');
