@@ -19,14 +19,26 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('pages.shop', ['products' => $products]);
+        $images = Image::all();
+
+        // dump($images);
+        return view('pages.shop', [
+            'products' => $products,
+            'images' => $images
+        ]);
     }
 
     public function productlist()
     {
         $products = Product::all();
         $stock = ProductVariant::all();
-        return view('admin.product_list', ['products' => $products, 'stocks' => $stock]);
+        $images = Image::all();
+
+        return view('admin.product_list', [
+            'products' => $products,
+            'stocks' => $stock,
+            'images' => $images
+        ]);
     }
 
     /**
@@ -56,7 +68,7 @@ class ProductController extends Controller
             'category' => 'required',
             'description' => '',
             'price' => 'required',
-            'images.*' => 'image|mimes:jpeg,png,jpg|max:10000',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg|max:10000',
             'color.*' => 'required',
             'size.*' => 'required',
             'stock.*' => 'required'

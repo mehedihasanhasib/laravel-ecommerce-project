@@ -17,7 +17,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="ecommerce-product-name">Title</label>
                         <input type="text" class="form-control" id="ecommerce-product-name" placeholder="Product title"
-                            name="title" aria-label="title">
+                            name="title" aria-label="title" value="{{ old('title') ?? null }}">
 
                         @error('title')
                             <p style="color: red">{{ $message }}</p>
@@ -27,7 +27,7 @@
                     <!-- Description -->
                     <div class="mb-3">
                         <label class="form-label">Description</label>
-                        <textarea name="description" rows="7" class="form-control p-2 pt-2"></textarea>
+                        <textarea name="description" rows="7" class="form-control p-2 pt-2" value="{{ old('description') ?? null }}"></textarea>
 
                         @error('description')
                             <p style="color: red">{{ $message }}</p>
@@ -50,7 +50,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="ecommerce-product-name">Price</label>
                         <input type="number" class="form-control" id="ecommerce-product-name" placeholder="Price"
-                            name="price">
+                            name="price" value="{{ old('price') ?? null }}">
 
                         @error('price')
                             <p style="color: red">{{ $message }}</p>

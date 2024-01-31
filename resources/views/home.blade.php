@@ -109,23 +109,31 @@
                             <a href="{{ route('index') }}" class="nav-item nav-link {{ $home ?? null }}">Home</a>
                             <a href="{{ route('shop') }}" class="nav-item nav-link {{ $shop ?? null }}">Shop</a>
                             {{-- <a href="detail.html" class="nav-item nav-link">Shop Detail</a> --}}
-                            <a href="{{ route('cart') }}" class="nav-item nav-link {{ $cart ?? null }}">Shopping
-                                Cart</a>
-                            <a href="{{ route('checkout') }}"
-                                class="nav-item nav-link {{ $checkout ?? null }}">Checkout</a>
+                            {{-- <a href="{{ route('cart') }}" class="nav-item nav-link {{ $cart ?? null }}">Shopping
+                                Cart</a> --}}
+                            {{-- <a href="{{ route('checkout') }}"
+                                class="nav-item nav-link {{ $checkout ?? null }}">Checkout</a> --}}
                             {{-- <a href="contact.html" class="nav-item nav-link">Contact</a> --}}
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             @if (Route::has('login'))
                                 @auth
-                                    <a href="" class="nav-item nav-link">
+                                    <div class="nav-item dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle"
+                                            data-toggle="dropdown">{{ Auth::user()->name }}</a>
+                                        <div style="position: absolute; left:10px;" class="dropdown-menu rounded-0 m-0">
+                                            <a href="cart.html" class="dropdown-item">Account Setting</a>
+                                            <a href="" class="dropdown-item" id="logoutButton">Logout</a>
+                                        </div>
+                                    </div>
+                                    {{-- <a href="" class="nav-item nav-link">
                                         {{ Auth::user()->name }}
-                                    </a>
+                                    </a> --}}
 
-                                    <form method="POST" action="{{ route('logout') }}">
+                                    <form method="POST" action="{{ route('logout') }}" id="logout">
                                         @csrf
-                                        <input style="background-color: #ffffff;border: none;" class="nav-item nav-link"
-                                            type="submit" value="Logout">
+                                        {{-- <input style="background-color: #ffffff;border: none;" class="nav-item nav-link"
+                                            type="submit" value="Logout"> --}}
                                     </form>
                                 @else
                                     <a href="{{ route('login') }}" class="nav-item nav-link">Log in</a>
@@ -266,6 +274,8 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('js/main.js') }}"></script>
+
+    <script></script>
 </body>
 
 </html>

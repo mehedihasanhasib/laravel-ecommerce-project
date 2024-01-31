@@ -19,62 +19,67 @@
                         {{-- title --}}
                         <td>
                             <div class="d-flex align-items-center">
-                                <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
-                                    style="width: 45px; height: 45px" class="rounded-circle" />
-                                <div class="ms-3">
-                                    <p class="fw-bold mb-1">{{ $product->title }}</p>
-                                    {{-- <p class="text-muted mb-0">john.doe@gmail.com</p> --}}
-                                </div>
-                            </div>
-                        </td>
-
-                        {{-- price --}}
-                        <td>
-                            <p class="fw-normal mb-1">$ {{ $product->price }}</p>
-                            {{-- <p class="text-muted mb-0">IT department</p> --}}
-                        </td>
-
-
-
-
-                        {{-- stock --}}
-                        <td style="padding-left: 35px">
-                            @foreach ($stocks as $stock)
-                                @if ($stock->product_id == $product->id)
-                                    <p class="fw-normal mb-1">
-                                        {{ $stock->color->color }} : {{ $stock->size->size }} :
-                                        {{ $stock['stock'] }}
-                                    </p>
+                                @foreach ($images as $image)
+                                    @if ($product->id == $image->product_id)
+                                        <img src="{{ asset('product_images/' . $image->image_path) }}" alt=""
+                                            style="width: 45px; height: 45px" class="rounded-circle" />
+                                    @break
                                 @endif
                             @endforeach
-                        </td>
+                            <div class="ms-3">
+                                <p class="fw-bold mb-1">{{ $product->title }}</p>
+                                {{-- <p class="text-muted mb-0">john.doe@gmail.com</p> --}}
+                            </div>
+                        </div>
+                    </td>
+
+                    {{-- price --}}
+                    <td>
+                        <p class="fw-normal mb-1">$ {{ $product->price }}</p>
+                        {{-- <p class="text-muted mb-0">IT department</p> --}}
+                    </td>
 
 
-                        {{-- action button --}}
-                        <td style="">
-                            <form action="" method="POST" style="display: inline-block">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-success">
-                                    Edit
-                                </button>
-                            </form>
 
-                            <form action="{{ route('product.destroy', ['product' => $product->id]) }}" method="POST"
-                                style="display: inline-block">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-danger">
 
-                                    Delete
-                                </button>
-                            </form>
-                        </td>
+                    {{-- stock --}}
+                    <td style="padding-left: 35px">
+                        @foreach ($stocks as $stock)
+                            @if ($stock->product_id == $product->id)
+                                <p class="fw-normal mb-1">
+                                    {{ $stock->color->color }} : {{ $stock->size->size }} :
+                                    {{ $stock['stock'] }}
+                                </p>
+                            @endif
+                        @endforeach
+                    </td>
 
-                    </tr>
-                @endforeach
 
-                {{-- <tr>
+                    {{-- action button --}}
+                    <td style="">
+                        <form action="" method="POST" style="display: inline-block">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-success">
+                                Edit
+                            </button>
+                        </form>
+
+                        <form action="{{ route('product.destroy', ['product' => $product->id]) }}" method="POST"
+                            style="display: inline-block">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger">
+
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+
+                </tr>
+            @endforeach
+
+            {{-- <tr>
                     <td>
                         <div class="d-flex align-items-center">
                             <img src="https://mdbootstrap.com/img/new/avatars/6.jpg" class="rounded-circle" alt=""
@@ -126,7 +131,7 @@
                     </td>
                 </tr> --}}
 
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
+</div>
 @endsection

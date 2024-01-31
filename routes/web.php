@@ -27,10 +27,6 @@ Route::get('cart', function () {
     return view('pages.cart');
 })->name('cart');
 
-Route::post('addcart/{id}', [OrderController::class, 'addcart'])
-    ->middleware(['auth', 'verified'])
-    ->name('addcart');
-
 Route::post('deleteCartItem/{id}', [OrderController::class, 'deleteCartItem'])
     ->middleware(['auth', 'verified'])
     ->name('deleteCartItem');
@@ -44,6 +40,14 @@ Route::get('shop', [ProductController::class, 'index'])
 Route::get('checkout', function () {
     return view('pages.checkout');
 })->name('checkout');
+
+Route::post('addcart/{id}', [OrderController::class, 'addcart'])
+    ->middleware(['auth', 'verified'])
+    ->name('addcart');
+
+Route::post('order', [OrderController::class, 'order'])
+    ->middleware(['auth', 'verified'])
+    ->name('order');
 
 
 /* Admin Routes */

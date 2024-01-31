@@ -74,7 +74,7 @@
                         @foreach ($sizes as $size)
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="size-{{ $size->size->id }}"
-                                    name="size" value="{{ $size->size->id }}">
+                                    name="size" value="{{ $size->size->size }}">
                                 <label class="custom-control-label"
                                     for="size-{{ $size->size->id }}">{{ $size->size->size }}</label>
                             </div>
@@ -89,7 +89,7 @@
                         @foreach ($colors as $color)
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="color-{{ $color->color->id }}"
-                                    name="color" value="{{ $color->color->id }}">
+                                    name="color" value="{{ $color->color->color }}">
                                 <label class="custom-control-label"
                                     for="color-{{ $color->color->id }}">{{ $color->color->color }}</label>
                             </div>

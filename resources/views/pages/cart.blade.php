@@ -35,37 +35,46 @@
                         @if (Session::has('cart'))
                             @foreach (session('cart') as $item)
                                 <tr>
-                                    <td class="align-middle d-flex items-center">
-                                        <div>
-                                            <img src="img/product-1.jpg" alt="" style="width: 50px;">
-                                            {{ $item['title'] }}
+
+                                    {{-- title --}}
+                                    <td class="align-middle d-flex align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ asset('product_images/' . $item['image']['image_path']) }}"
+                                                alt="" style="width: 50px;">
+                                            <p class="mt-4">{{ $item['title'] }}</p>
                                         </div>
                                     </td>
 
-                                    {{-- <td class="align-middle">{{ $item['size'] }}</td>
 
-                                    <td class="align-middle">{{ session('cartItem')['color'] ?? null }}</td> --}}
+                                    {{-- price --}}
+                                    <td class="align-middle" style="width: 90px">
+                                        $ {{ $item['price'] * $item['quantity'] }}
+                                    </td>
 
-                                    <td class="align-middle">$ {{ $item['price'] }}</td>
 
+
+                                    {{-- quantity --}}
                                     <td class="align-middle">
-                                        <div class="input-group quantity mx-auto" style="width: 100px;">
+
+                                        {{ $item['quantity'] }}
+                                        {{-- <div class="input-group quantity mx-auto" style="width: 100px;">
                                             <div class="input-group-btn">
                                                 <button class="btn btn-sm btn-primary btn-minus">
                                                     <i class="fa fa-minus"></i>
                                                 </button>
                                             </div>
                                             <input type="text"
-                                                class="form-control form-control-sm bg-secondary text-center" value="1"
-                                                name="quantity">
+                                                class="form-control form-control-sm bg-secondary text-center"
+                                                value="{{ $item['quantity'] }}" name="quantity">
                                             <div class="input-group-btn">
                                                 <button class="btn btn-sm btn-primary btn-plus">
                                                     <i class="fa fa-plus"></i>
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </td>
-                                    {{-- <td class="align-middle">$150</td> --}}
+
+                                    {{-- delete button --}}
                                     <td class="align-middle">
                                         <form action="{{ route('deleteCartItem', ['id' => $item['id']]) }}" method="POST">
                                             @csrf
@@ -84,107 +93,6 @@
                             </tr>
                         @endif
 
-
-
-                        {{-- <tr>
-                            <td class="align-middle"><img src="img/product-2.jpg" alt="" style="width: 50px;">
-                                Colorful Stylish Shirt</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                        value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                        class="fa fa-times"></i></button></td>
-                        </tr>
-
-                        <tr>
-                            <td class="align-middle"><img src="img/product-3.jpg" alt="" style="width: 50px;">
-                                Colorful Stylish Shirt</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                        value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                        class="fa fa-times"></i></button></td>
-                        </tr>
-
-                        <tr>
-                            <td class="align-middle"><img src="img/product-4.jpg" alt="" style="width: 50px;">
-                                Colorful Stylish Shirt</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                        value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                        class="fa fa-times"></i></button></td>
-                        </tr>
-
-                        <tr>
-                            <td class="align-middle"><img src="img/product-5.jpg" alt="" style="width: 50px;">
-                                Colorful Stylish Shirt</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
-                                <div class="input-group quantity mx-auto" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-minus">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary text-center"
-                                        value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle"><button class="btn btn-sm btn-primary"><i
-                                        class="fa fa-times"></i></button></td>
-                        </tr> --}}
 
                     </tbody>
                 </table>
@@ -207,7 +115,7 @@
                             <h6 class="font-weight-medium">Subtotal</h6>
                             <h6 class="font-weight-medium">
                                 @if (Session::has('cart'))
-                                    {{ array_sum(array_column(session('cart'), 'price')) ?? 0 }}
+                                    ${{ array_sum(array_column(session('cart'), 'subtotal')) ?? 0 }}
                                 @else
                                     0
                                 @endif
@@ -215,17 +123,27 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Shipping</h6>
-                            <h6 class="font-weight-medium">$10</h6>
+                            <h6 class="font-weight-medium">$0</h6>
                         </div>
                     </div>
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Total</h5>
-                            <h5 class="font-weight-bold">$160</h5>
+                            <h5 class="font-weight-bold">
+                                @if (Session::has('cart'))
+                                    ${{ array_sum(array_column(session('cart'), 'subtotal')) ?? 0 }}
+                                @else
+                                    0
+                                @endif
+
+                            </h5>
                         </div>
 
-                        <a href="{{ route('checkout') }}" class="btn btn-block btn-primary my-3 py-3">Proceed To
-                            Checkout</a>
+                        {{-- <a href="{{ route('checkout') }}" class="btn btn-block btn-primary my-3 py-3">Place Order</a> --}}
+                        <form action="{{ route('order') }}" method="POST">
+                            @csrf
+                            <button class="btn btn-block btn-primary my-3 py-3">Place Order</button>
+                        </form>
                     </div>
                 </div>
             </div>
