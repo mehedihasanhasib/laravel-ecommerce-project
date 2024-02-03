@@ -67,8 +67,6 @@ class OrderController extends Controller
 
         $items = Item::where('order_id', $order_id)->get();
 
-        // dump($items);
-
         Mail::to($request->user())->send(new OrderPlaced($items));
 
         session()->forget('cart');
@@ -98,8 +96,6 @@ class OrderController extends Controller
         $images = array_map(function ($product_id) {
             return Image::where('product_id', $product_id)->get()->first();
         }, $products_id);
-
-
 
         return view('pages.my_orders', [
             'orders' => $orders,

@@ -40,13 +40,14 @@
 
                                 {{-- items --}}
                                 <td class="align-middle text-left">
-
                                     @foreach ($images as $image)
-                                        <img src="{{ asset('product_images/' . $image['image_path']) }}" alt=""
-                                            style="width: 50px;">
+                                        @if ($order->id == $image->item->order_id)
+                                            <img src="{{ asset('product_images/' . $image['image_path']) }}" alt=""
+                                                style="width: 50px;">
+                                        @endif
                                     @endforeach
 
-                                    <ul>
+                                    <ul style="display: inline-block">
                                         @foreach ($items as $item)
                                             @foreach ($item as $item2)
                                                 @if ($order->id == $item2['order_id'])
