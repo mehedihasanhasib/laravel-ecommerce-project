@@ -14,4 +14,9 @@ class Order extends Model
         'total_amount',
         'payment_method'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

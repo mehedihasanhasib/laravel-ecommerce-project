@@ -123,6 +123,7 @@
                                             data-toggle="dropdown">{{ Auth::user()->name }}</a>
                                         <div style="position: absolute; left:10px;" class="dropdown-menu rounded-0 m-0">
                                             <a href="cart.html" class="dropdown-item">Account Setting</a>
+                                            <a href="{{ route('myorders') }}" class="dropdown-item">My Orders</a>
                                             <a href="" class="dropdown-item" id="logoutButton">Logout</a>
                                         </div>
                                     </div>

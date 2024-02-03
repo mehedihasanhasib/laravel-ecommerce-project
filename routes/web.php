@@ -41,8 +41,11 @@ Route::get('checkout', function () {
     return view('pages.checkout');
 })->name('checkout');
 
-Route::post('addcart/{id}', [OrderController::class, 'addcart'])
+Route::get('myorders', [OrderController::class, 'myorders'])
     ->middleware(['auth', 'verified'])
+    ->name('myorders');
+
+Route::post('addcart/{id}', [OrderController::class, 'addcart'])
     ->name('addcart');
 
 Route::post('order', [OrderController::class, 'order'])

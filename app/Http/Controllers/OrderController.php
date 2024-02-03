@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderPlaced;
 use App\Models\Color;
 use App\Models\Image;
 use App\Models\Item;
@@ -10,9 +11,13 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Size;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use PDO;
 
 class OrderController extends Controller
 {
+
+    // add to cart
     public function addcart(Request $request, $id)
     {
         $product = Product::find($id);
@@ -36,6 +41,7 @@ class OrderController extends Controller
     }
 
 
+    // create orders
     public function order(Request $request)
     {
 
@@ -55,22 +61,46 @@ class OrderController extends Controller
                 'unit_price' => $item['price'],
                 'quantity' => $item['quantity']
             ]);
-
-            // dump([
-            //     'order_id' => Order::where('user_id', $request->user()->id)->get()->last()->id,
-            //     'product_id' => $item['id'],
-            //     'product_name' => $item['title'],
-            //     'size' => $item['size'],
-            //     'color' => $item['color'],
-            //     'unit_price' => $item['price'],
-            //     'quantity' => $item['quantity']
-            // ]);
         }
+
+        Mail::to($request->user())->send(new OrderPlaced());
 
         session()->forget('cart');
 
-        return redirect()->route('cart');
+        return redirect()->route('myorders')
+            ->with('orderSuccess', 'Order placed Successfully');
     }
+
+
+    //my orders
+    public function myorders(Request $request)
+    {
+        $orders = Order::where('user_id', $request->user()->id)->get()->all();
+
+        $items = array_map(function ($hello) {
+            return Item::where('order_id', $hello->id)->get()->all();
+        }, $orders);
+
+        $products_id = [];
+
+        foreach ($items as $item) {
+            foreach ($item as $item2) {
+                array_push($products_id, $item2['product_id']);
+            }
+        }
+
+        $images = array_map(function ($product_id) {
+            return Image::where('product_id', $product_id)->get()->first();
+        }, $products_id);
+
+
+
+        return view('pages.my_orders', [
+            'orders' => $orders,
+            'items' => $items,
+            'images' => $images
+        ]);
+    } //my orders
 
 
     public function deleteCartItem(Request $request, $id)
