@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Item;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -17,8 +18,11 @@ class OrderPlaced extends Mailable
      * Create a new message instance.
      */
 
-    public function __construct()
+    public $items;
+
+    public function __construct($items)
     {
+        $this->items = $items;
     }
 
     /**
@@ -38,6 +42,7 @@ class OrderPlaced extends Mailable
     {
         return new Content(
             view: 'mail.order_placed',
+            with: ['items' => $this->items]
         );
     }
 

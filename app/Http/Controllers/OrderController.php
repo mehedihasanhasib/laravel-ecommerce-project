@@ -51,9 +51,11 @@ class OrderController extends Controller
             'payment_method' => 'COD'
         ]);
 
+        $order_id = Order::where('user_id', $request->user()->id)->get()->last()->id;
+
         foreach (session('cart') as $item) {
             Item::create([
-                'order_id' => Order::where('user_id', $request->user()->id)->get()->last()->id,
+                'order_id' => $order_id,
                 'product_id' => $item['id'],
                 'product_name' => $item['title'],
                 'size' => $item['size'],
@@ -63,7 +65,11 @@ class OrderController extends Controller
             ]);
         }
 
-        Mail::to($request->user())->send(new OrderPlaced());
+        $items = Item::where('order_id', $order_id)->get();
+
+        // dump($items);
+
+        Mail::to($request->user())->send(new OrderPlaced($items));
 
         session()->forget('cart');
 
