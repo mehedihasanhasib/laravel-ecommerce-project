@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewProduct;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Image;
@@ -113,6 +114,8 @@ class ProductController extends Controller
                 'image_path' => $path
             ]);
         }
+
+        event(new NewProduct());
 
         return redirect()->route('addproduct')->with('message', 'product added succesfully');
     }
