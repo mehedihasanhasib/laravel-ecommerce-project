@@ -108,6 +108,8 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{{ route('index') }}" class="nav-item nav-link {{ $home ?? null }}">Home</a>
                             <a href="{{ route('shop') }}" class="nav-item nav-link {{ $shop ?? null }}">Shop</a>
+                            <a href="{{ route('productlist') }}"
+                                class="nav-item nav-link {{ $dashboard ?? null }}">Dashboard</a>
                             {{-- <a href="detail.html" class="nav-item nav-link">Shop Detail</a> --}}
                             {{-- <a href="{{ route('cart') }}" class="nav-item nav-link {{ $cart ?? null }}">Shopping
                                 Cart</a> --}}

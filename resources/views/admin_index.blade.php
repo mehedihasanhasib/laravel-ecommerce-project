@@ -112,10 +112,18 @@
                 <ul class="menu-inner py-1">
 
                     <!-- Dashboard -->
-                    <li class="menu-item {{ $dashboard ?? null }}">
+                    {{-- <li class="menu-item {{ $dashboard ?? null }}">
                         <a href="{{ route('dashboard') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
+                        </a>
+                    </li> --}}
+
+
+                    <li class="menu-item {{ $productlist ?? null }}">
+                        <a href="{{ route('productlist') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div data-i18n="Analytics">Products</div>
                         </a>
                     </li>
 
@@ -123,13 +131,6 @@
                         <a href="{{ route('addproduct') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Add Product</div>
-                        </a>
-                    </li>
-
-                    <li class="menu-item {{ $productlist ?? null }}">
-                        <a href="{{ route('productlist') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Products</div>
                         </a>
                     </li>
 
