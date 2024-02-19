@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -92,6 +93,15 @@ Route::prefix('admin')->group(function () {
 
     // create category
     Route::post('/create-category', [CategoryController::class, 'store'])
+        ->middleware(['admin']);
+
+    // create color page load
+    Route::get('/create-color', [ColorController::class, 'index'])
+        ->name('create_color')
+        ->middleware(['admin']);
+
+    // create color
+    Route::post('/create-color', [ColorController::class, 'store'])
         ->middleware(['admin']);
 });
 

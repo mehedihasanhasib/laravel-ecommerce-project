@@ -52,6 +52,6 @@ php artisan serve
 npm run dev
 ```
 
-**First of all login as admin the credentials are given in the admin login page. Then create some products.**
+**First of all login as admin the credentials are given in the admin login page. Then create some category, colors, sizes and products. Then login as user.**
 
 Now enjoy the app. ❤

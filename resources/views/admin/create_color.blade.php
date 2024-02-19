@@ -1,7 +1,7 @@
-@extends('admin_index', ['create_category' => 'active'])
+@extends('admin_index', ['create_color' => 'active'])
 
 @section('content')
-    <form action="{{ route('create_category') }}" method="POST" class="row d-flex justify-content-center">
+    <form action="{{ route('create_color') }}" method="POST" class="row d-flex justify-content-center">
         @csrf
         <h3 style="color: green; text-align: center; margin-top: 5px">{{ Session::get('message') ?? null }}</h3>
 
@@ -10,15 +10,15 @@
             <div class="card mb-4">
 
                 <div class="card-header">
-                    <h5 class="card-tile mb-0">Create Category</h5>
+                    <h5 class="card-tile mb-0">Create Color</h5>
                 </div>
                 <div class="card-body">
                     {{-- title --}}
                     <div class="mb-3">
-                        <label class="form-label" for="ecommerce-product-name">Category Name</label>
-                        <input type="text" class="form-control" placeholder="Category Name" name="category"
-                            aria-label="title" value="{{ old('category') ?? null }}">
-                        @error('category')
+                        <label class="form-label" for="ecommerce-product-name">Color Name</label>
+                        <input type="text" class="form-control" placeholder="Color Name" name="color"
+                            aria-label="title" value="{{ old('color') ?? null }}">
+                        @error('color')
                             <p style="color: red">{{ $message }}</p>
                         @enderror
                     </div>

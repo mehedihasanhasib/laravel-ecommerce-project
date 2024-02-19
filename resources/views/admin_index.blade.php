@@ -122,28 +122,30 @@
 
                     <li class="menu-item {{ $productlist ?? null }}">
                         <a href="{{ route('productlist') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Products</div>
                         </a>
                     </li>
 
                     <li class="menu-item {{ $addproduct ?? null }}">
                         <a href="{{ route('addproduct') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Add Product</div>
                         </a>
                     </li>
 
                     <li class="menu-item {{ $create_category ?? null }}">
                         <a href="{{ route('create_category') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Create Category</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item {{ $create_color ?? null }}">
+                        <a href="{{ route('create_color') }}" class="menu-link">
+                            <div data-i18n="Analytics">Create Color</div>
                         </a>
                     </li>
 
                     <li class="menu-item">
                         <a href="{{ route('shop') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Goto Shop</div>
                         </a>
                     </li>
