@@ -82,6 +82,11 @@
                                         <span>Sign In</span>
                                     </button>
 
+                                    <div class="text-center">
+                                        <p>Emain: <span>admin@admin.com</span></p>
+                                        <p>Password: <span>12345678</span></p>
+                                    </div>
+
                                 </div>
                             </form>
                         </div>

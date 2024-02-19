@@ -19,7 +19,7 @@ class AdminController extends Controller
             'email' => $credentials['email'],
             'password' => $credentials['password']
         ])) {
-            return redirect()->route('dashboard');
+            return redirect()->route('productlist');
         } else {
             return back()->with('error', 'Invalid email or password');
         }

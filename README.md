@@ -1,12 +1,12 @@
 # Introduction
 
-This is a e-commerce application. This application has two user role 'User' and 'Admin'. 
+This is a e-commerce application. This application has two user role 'User' and 'Admin'.
 
-# Features 
+# Features
 
-- Admin can create, update and delete products which will be shown in the shop page.
-- Users can see all the products and can do add to cart and make orders.
-- Users can also their orders list.
+-   Admin can create, update and delete products which will be shown in the shop page.
+-   Users can see all the products and can do add to cart and make orders.
+-   Users can also their orders list.
 
 # How to install
 
@@ -18,13 +18,12 @@ XAMPP installed is the primary requisition.
 
 To install this app just download or clone the repository and open a terminal in the same folder directory and run the following commands one by one:
 
-
 ```
 composer install
 ```
 
 ```
-cp .env-example .env
+cp .env.example .env
 ```
 
 ```
@@ -34,6 +33,8 @@ php artisan key:generate
 ```
 npm install
 ```
+
+before running the following command configure the **DB_DATABASE** in .env file
 
 ```
 php artisan migrate
@@ -53,6 +54,4 @@ npm run dev
 
 **First of all login as admin the credentials are given in the admin login page. Then create some products.**
 
-
 Now enjoy the app. ❤
-
