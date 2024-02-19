@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -55,19 +56,49 @@ Route::post('order', [OrderController::class, 'order'])
 
 /* Admin Routes */
 Route::prefix('admin')->group(function () {
-    Route::get('login', [AdminController::class, 'index'])->name('admin.login');
-    Route::post('login', [AdminController::class, 'login'])->name('admin.log_in');
-    Route::post('logout', [AdminController::class, 'logout'])->name('admin.logout')->middleware(['admin']);
-    Route::get('dashboard', [ProductController::class, 'dashboard'])->name('dashboard')->middleware(['admin']);
-    Route::get('addproduct', [ProductController::class, 'addproduct'])->name('addproduct')->middleware(['admin']);
-    Route::get('productlist', [ProductController::class, 'productlist'])->name('productlist')->middleware(['admin']);
+
+    // admin login page load
+    Route::get('login', [AdminController::class, 'index'])
+        ->name('admin.login');
+
+    // admin login
+    Route::post('login', [AdminController::class, 'login'])
+        ->name('admin.log_in');
+
+    // admin logout
+    Route::post('logout', [AdminController::class, 'logout'])
+        ->name('admin.logout')
+        ->middleware(['admin']);
+
+    //admin dashoard load
+    Route::get('dashboard', [ProductController::class, 'dashboard'])
+        ->name('dashboard')
+        ->middleware(['admin']);
+
+    // add product page load
+    Route::get('addproduct', [ProductController::class, 'addproduct'])
+        ->name('addproduct')
+        ->middleware(['admin']);
+
+    // product list page load
+    Route::get('productlist', [ProductController::class, 'productlist'])
+        ->name('productlist')
+        ->middleware(['admin']);
+
+    // create category page load
+    Route::get('/create-category', [CategoryController::class, 'index'])
+        ->name('create_category')
+        ->middleware(['admin']);
+
+    // create category
+    Route::post('/create-category', [CategoryController::class, 'store'])
+        ->middleware(['admin']);
 });
 
 Route::resource('product', ProductController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['admin']);
 /* Admin Routes */
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
