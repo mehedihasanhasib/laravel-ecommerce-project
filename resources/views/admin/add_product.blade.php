@@ -27,17 +27,10 @@
                     <!-- Description -->
                     <div class="mb-3">
                         <label class="form-label">Description</label>
-                        <textarea name="description" rows="7" class="form-control p-2 pt-2" value="{{ old('description') ?? null }}"></textarea>
-
-                        @error('description')
-                            <p style="color: red">{{ $message }}</p>
-                        @enderror
-
+                        <textarea name="description" rows="5" class="form-control p-2 pt-2" value="{{ old('description') ?? null }}"></textarea>
                     </div>
 
-
                     <button type="submit" class="btn btn-success">Submit</button>
-
                 </div>
             </div> <!-- /Product Information -->
         </div> {{-- 1st col --}}
@@ -59,16 +52,19 @@
 
                     {{-- image upload --}}
                     <div class="mb-3">
-                        <label for="formFileMultiple" class="form-label">Upload Images</label>
-                        <input name="images[]" class="form-control" type="file" multiple />
 
-                        {{-- @error('images')
-                            <p class="text-red-500">{{ $message }}</p>
-                        @enderror --}}
+                        <label for="images[]" class="form-label">Upload Images</label>
+                        <input name="images[]" class="form-control" type="file" multiple />
 
                         @error('images')
                             <p style="color: red">{{ $message }}</p>
                         @enderror
+
+                        @foreach ($errors->get('images.*') as $messages)
+                            @foreach ($messages as $message)
+                                <p style="color: red">{{ $message }}</p>
+                            @endforeach
+                        @endforeach
                     </div>
 
 
@@ -89,11 +85,7 @@
                     </div> {{-- categories --}}
 
 
-
-
-
                     <div class="form-repeater" id="variant-container">
-
                         {{--  Variants  --}}
                         <label class="form-label" for="ecommerce-product-name">Variants</label>
                         <div class="d-flex">
@@ -151,6 +143,13 @@
                             </div>
                         </div>
 
+                        @error('color*')
+                            <p style="color: red">The color field is required.</p>
+                        @enderror
+
+                        @error('size*')
+                            <p style="color: red">The size field is required.</p>
+                        @enderror
 
 
                         @error('stock*')

@@ -9,6 +9,8 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Size;
+use Dotenv\Validator;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -66,13 +68,18 @@ class ProductController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|max:255',
+            'description' => 'nullable',
             'category' => 'required',
-            'description' => '',
             'price' => 'required',
-            'images.*' => 'required|image|mimes:jpeg,png,jpg|max:10000',
+            'images' => 'required',
+            'images.*' => 'required|mimes:jpeg,png,jpg|max:2048',
             'color.*' => 'required',
             'size.*' => 'required',
             'stock.*' => 'required'
+        ], [
+            'images.required' => 'Please choose an image.',
+            'images.*.mimes' => 'The image field must be a file of type: jpeg, png, jpg.',
+            'images.*.max' => 'The image should not exceed 2mb',
         ]);
 
         $product = Product::create($data);
@@ -108,11 +115,20 @@ class ProductController extends Controller
         }
 
         foreach ($data['images'] as $image) {
-            $path = Storage::putFile('product_images', $image);
+
+            //store to public folder
+            $file_name = time() . $image->getClientOriginalName();
+            $path =  public_path() . '/product_images';
+            $image->move($path,  $file_name);
+
             Image::create([
                 'product_id' => $product_id,
-                'image_path' => $path
+                'image_path' => $file_name
             ]);
+
+            //store storage folder
+            // $path = Storage::putFile('product_images', $image);
+
         }
 
         event(new NewProduct());
