@@ -6,6 +6,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SizeController;
 use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -102,6 +103,15 @@ Route::prefix('admin')->group(function () {
 
     // create color
     Route::post('/create-color', [ColorController::class, 'store'])
+        ->middleware(['admin']);
+
+    // create size page load
+    Route::get('/create-size', [SizeController::class, 'index'])
+        ->name('create_size')
+        ->middleware(['admin']);
+
+    // create color
+    Route::post('/create-size', [SizeController::class, 'store'])
         ->middleware(['admin']);
 });
 

@@ -144,6 +144,12 @@
                         </a>
                     </li>
 
+                    <li class="menu-item {{ $create_size ?? null }}">
+                        <a href="{{ route('create_size') }}" class="menu-link">
+                            <div data-i18n="Analytics">Create Size</div>
+                        </a>
+                    </li>
+
                     <li class="menu-item">
                         <a href="{{ route('shop') }}" class="menu-link">
                             <div data-i18n="Analytics">Goto Shop</div>

@@ -21,7 +21,5 @@ class ColorController extends Controller
         Color::updateOrInsert($data);
 
         return redirect()->route('addproduct');
-
-        // dump($request->input());
     }
 }
