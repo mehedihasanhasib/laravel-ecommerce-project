@@ -72,7 +72,7 @@ class ProductController extends Controller
             'category' => 'required',
             'price' => 'required',
             'images' => 'required',
-            'images.*' => 'required|mimes:jpeg,png,jpg|max:2048',
+            'images.*' => 'required|mimes:jpeg,png,jpg|size:2048',
             'color.*' => 'required',
             'size.*' => 'required',
             'stock.*' => 'required'
