@@ -34,7 +34,7 @@ class OrderController extends Controller
             'subtotal' => $product['price'] * $request->input('quantity')
         ];
 
-        $cartItem[time()] = $newItem;
+        $cartItem[] = $newItem;
 
         session(['cart' => $cartItem]);
         return redirect(route('cart'));

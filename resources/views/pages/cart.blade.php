@@ -22,20 +22,16 @@
                     <thead class="bg-secondary text-dark">
                         <tr>
                             <th>Products</th>
-                            {{-- <th>Size</th>
-                            <th>Color</th> --}}
                             <th>Price</th>
                             <th>Quantity</th>
-                            {{-- <th>Total</th> --}}
                             <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
 
                         @if (Session::has('cart'))
-                            @foreach (session('cart') as $item)
+                            @foreach (session('cart') as $key => $item)
                                 <tr>
-
                                     {{-- title --}}
                                     <td class="align-middle d-flex align-items-center">
                                         <div class="d-flex align-items-center">
@@ -44,15 +40,10 @@
                                             <p class="mt-4 px-3">{{ $item['title'] }}</p>
                                         </div>
                                     </td>
-
-
                                     {{-- price --}}
                                     <td class="align-middle" style="width: 90px">
                                         $ {{ $item['price'] * $item['quantity'] }}
                                     </td>
-
-
-
                                     {{-- quantity --}}
                                     <td class="align-middle">
 
@@ -76,7 +67,7 @@
 
                                     {{-- delete button --}}
                                     <td class="align-middle">
-                                        <form action="{{ route('deleteCartItem', ['id' => $item['id']]) }}" method="POST">
+                                        <form action="{{ route('deleteCartItem', ['id' => $key]) }}" method="POST">
                                             @csrf
                                             <button class="btn btn-sm btn-primary">
                                                 <i class="fa fa-times"></i>
