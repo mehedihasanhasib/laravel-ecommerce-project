@@ -159,7 +159,7 @@
                                     @if ($product->id == $image->product_id)
                                         <div
                                             class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                            <img class="img-fluid w-100"
+                                            <img style="height: 50vh" class="img-fluid w-100"
                                                 src="{{ asset('product_images/' . $image->image_path) }}" alt="">
                                         </div>
                                     @break

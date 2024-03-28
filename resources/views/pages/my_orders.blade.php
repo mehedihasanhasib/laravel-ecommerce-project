@@ -32,12 +32,8 @@
                             <tr>
                                 {{-- order id --}}
                                 <td>
-
                                     <p class="mt-4">{{ $order->id }}</p>
-
                                 </td>
-
-
                                 {{-- items --}}
                                 <td class="align-middle text-left">
                                     @foreach ($images as $image)

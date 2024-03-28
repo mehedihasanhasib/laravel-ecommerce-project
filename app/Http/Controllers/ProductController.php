@@ -115,7 +115,6 @@ class ProductController extends Controller
         }
 
         foreach ($data['images'] as $image) {
-
             //store to public folder
             $file_name = time() . $image->getClientOriginalName();
             $path =  public_path() . '/product_images';
