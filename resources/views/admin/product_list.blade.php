@@ -15,9 +15,8 @@
             <tbody>
                 @foreach ($products as $product)
                     <tr>
-
                         {{-- title --}}
-                        <td>
+                        <td style="width: 40vw">
                             <div class="d-flex align-items-center">
                                 @foreach ($images as $image)
                                     @if ($product->id == $image->product_id)
@@ -61,7 +60,7 @@
                             @csrf
                             @method('delete')
                             <button class="btn btn-success">
-                                Edit
+                                <i class="fa-regular fa-pen-to-square"></i>
                             </button>
                         </form>
 
@@ -70,8 +69,7 @@
                             @csrf
                             @method('delete')
                             <button class="btn btn-danger">
-
-                                Delete
+                                <i class="fa-solid fa-trash"></i>
                             </button>
                         </form>
                     </td>
