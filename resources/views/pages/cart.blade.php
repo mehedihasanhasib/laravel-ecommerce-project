@@ -37,7 +37,10 @@
                                         <div class="d-flex align-items-center">
                                             <img src="{{ asset('product_images/' . $item['image']['image_path']) }}"
                                                 alt="" style="width: 50px;">
-                                            <p class="mt-4 px-3">{{ $item['title'] }}</p>
+                                            <p class="mt-4 px-3">
+                                                {{ $item['title'] }} <span>(Color: {{ $item['color'] }}, Size:
+                                                    {{ $item['size'] }})</span>
+                                            </p>
                                         </div>
                                     </td>
                                     {{-- price --}}
