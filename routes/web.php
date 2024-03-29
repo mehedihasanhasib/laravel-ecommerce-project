@@ -73,11 +73,6 @@ Route::prefix('admin')->group(function () {
         ->name('admin.logout')
         ->middleware(['admin']);
 
-    //admin dashoard load
-    Route::get('dashboard', [ProductController::class, 'dashboard'])
-        ->name('dashboard')
-        ->middleware(['admin']);
-
     // add product page load
     Route::get('addproduct', [ProductController::class, 'addproduct'])
         ->name('addproduct')
@@ -118,6 +113,10 @@ Route::prefix('admin')->group(function () {
     // show all orders
     Route::get('/orders', [OrderController::class, 'index'])
         ->name('orders');
+
+    // show edit page
+    Route::get('/edit/{id}', [ProductController::class, 'edit'])
+        ->name('edit');
 });
 
 Route::resource('product', ProductController::class)

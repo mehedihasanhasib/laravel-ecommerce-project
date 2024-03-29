@@ -38,9 +38,6 @@
                         {{-- <p class="text-muted mb-0">IT department</p> --}}
                     </td>
 
-
-
-
                     {{-- stock --}}
                     <td style="padding-left: 35px">
                         @foreach ($stocks as $stock)
@@ -53,12 +50,10 @@
                         @endforeach
                     </td>
 
-
                     {{-- action button --}}
                     <td style="">
-                        <form action="" method="POST" style="display: inline-block">
+                        <form action="{{ route('edit', ['id' => $product->id]) }}" style="display: inline-block">
                             @csrf
-                            @method('delete')
                             <button class="btn btn-success">
                                 <i class="fa-regular fa-pen-to-square"></i>
                             </button>

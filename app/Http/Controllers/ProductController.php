@@ -16,21 +16,18 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // display all product to users
     public function index()
     {
         $products = Product::all();
         $images = Image::all();
-
-        // dump($images);
         return view('pages.shop', [
             'products' => $products,
             'images' => $images
         ]);
     }
 
+    // list all product to admin
     public function productlist()
     {
         $products = Product::all();
@@ -44,9 +41,7 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new product.
-     */
+    // create product page show to admin
     public function addproduct()
     {
         $categories = Category::all();
@@ -56,14 +51,7 @@ class ProductController extends Controller
         return view('admin.add_product', ['categories' => $categories, 'colors' => $colors, 'sizes' => $sizes]);
     }
 
-    public function dashboard()
-    {
-        return view('admin.admin_dashboard');
-    }
-
-    /**
-     * Store a newly created product in storage.
-     */
+    // store new product
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -124,20 +112,13 @@ class ProductController extends Controller
                 'product_id' => $product_id,
                 'image_path' => $file_name
             ]);
-
-            //store storage folder
-            // $path = Storage::putFile('product_images', $image);
-
         }
 
         event(new NewProduct());
-
         return redirect()->route('addproduct')->with('message', 'product added succesfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // display single product to users
     public function show($product_id)
     {
         $product = Product::find($product_id);
@@ -153,29 +134,32 @@ class ProductController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product)
+    // show the edit page to admin
+    public function edit($id)
     {
-        //
+        $product = Product::find($id);
+        $product_variants = ProductVariant::where('product_id', $id)->get();
+
+        // foreach ($product_variants as $key => $value) {
+        //     dump($value);
+        // }
+        // die();
+        return view('admin.edit_page', [
+            'product' => $product,
+            'product_variants' => $product_variants
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // update a product
     public function update(Request $request, Product $product)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // delete a product
     public function destroy(Product $product)
     {
         Product::find($product->id)->delete();
-
         return redirect()->route('productlist')->with('success', 'Product deleted successfully');
     }
 }
