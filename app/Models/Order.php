@@ -15,4 +15,14 @@ class Order extends Model
         'total_amount',
         'payment_method'
     ];
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class, 'order_id', 'id');
+    }
 }

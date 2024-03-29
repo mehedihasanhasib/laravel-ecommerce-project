@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
+use Hamcrest\Number\OrderingComparison;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -113,6 +114,10 @@ Route::prefix('admin')->group(function () {
     // create color
     Route::post('/create-size', [SizeController::class, 'store'])
         ->middleware(['admin']);
+
+    // show all orders
+    Route::get('/orders', [OrderController::class, 'index'])
+        ->name('orders');
 });
 
 Route::resource('product', ProductController::class)

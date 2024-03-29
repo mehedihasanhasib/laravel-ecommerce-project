@@ -125,10 +125,15 @@
                         </a>
                     </li> --}}
 
-
                     <li class="menu-item {{ $productlist ?? null }}">
                         <a href="{{ route('productlist') }}" class="menu-link">
                             <div data-i18n="Analytics">Products</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item {{ $allorders ?? null }}">
+                        <a href="{{ route('orders') }}" class="menu-link">
+                            <div data-i18n="Analytics">Orders</div>
                         </a>
                     </li>
 

@@ -16,6 +16,14 @@ use PDO;
 
 class OrderController extends Controller
 {
+
+    // show all orders to admin
+    public function index()
+    {
+        $orders = Order::all();
+        return view('admin.all_orders', ['orders' => $orders]);
+    }
+
     // add to cart
     public function addcart(Request $request, $id)
     {
@@ -106,7 +114,7 @@ class OrderController extends Controller
         $images = array_map(function ($product_id) {
             return Image::where("product_id", $product_id)->get()->first();
         }, $products_id);
-        dd($images[0]->item());
+
         return view("pages.my_orders", [
             "orders" => $orders,
             "items" => $items,
