@@ -218,8 +218,7 @@
                                 Cart</a>
                             <a class="text-dark mb-2" href="checkout.html"><i
                                     class="fa fa-angle-right mr-2"></i>Checkout</a>
-                            <a class="text-dark" href="{{ route('dashboard') }}"><i
-                                    class="fa fa-angle-right mr-2"></i>Dashboard</a>
+
                         </div>
                     </div>
                     <div class="col-md-4 mb-5">

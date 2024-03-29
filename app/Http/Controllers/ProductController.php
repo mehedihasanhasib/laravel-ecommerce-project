@@ -139,14 +139,14 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $product_variants = ProductVariant::where('product_id', $id)->get();
+        $colors = Color::all();
+        $sizes = Size::all();
 
-        // foreach ($product_variants as $key => $value) {
-        //     dump($value);
-        // }
-        // die();
         return view('admin.edit_page', [
             'product' => $product,
-            'product_variants' => $product_variants
+            'product_variants' => $product_variants,
+            'colors' => $colors,
+            'sizes' => $sizes
         ]);
     }
 

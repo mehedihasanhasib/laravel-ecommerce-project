@@ -27,12 +27,12 @@
                     <!-- Description -->
                     <div class="mb-3">
                         <label class="form-label">Description</label>
-                        <textarea name="description" rows="5" class="form-control p-2 pt-2" value="">
-                            {{ $product->description }}
+                        <textarea name="description" rows="5" class="form-control p-2 pt-2">
+                            
                         </textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success">Update</button>
                 </div>
             </div> <!-- /Product Information -->
         </div> {{-- 1st col --}}
@@ -108,30 +108,32 @@
                                     <div class="mt-2 col-4">
                                         <select name="color[]" class="form-select">
                                             <option selected value="">
-
+                                                {{ $item->color->color }}
                                             </option>
-                                            {{-- @foreach ($colors as $color)
+                                            @foreach ($colors as $color)
                                                 <option value="{{ $color->color }}">{{ $color->color }}
                                                 </option>
-                                            @endforeach --}}
+                                            @endforeach
                                         </select>
                                     </div>
 
                                     {{-- size --}}
                                     <div class="mt-2 col-3">
-                                        {{-- <select name="size[]" class="form-select">
-                                            <option selected value="">Size</option>
+                                        <select name="size[]" class="form-select">
+                                            <option selected value="">
+                                                {{ $item->size->size }}
+                                            </option>
                                             @foreach ($sizes as $size)
                                                 <option value="{{ $size->size }}">{{ $size->size }}
                                                 </option>
                                             @endforeach
-                                        </select> --}}
+                                        </select>
                                     </div>
 
                                     {{-- stock --}}
                                     <div class="mt-2 col-4">
                                         <input name="stock[]" type="number" id="form-repeater-1-2" class="form-control"
-                                            placeholder="Stock">
+                                            placeholder="Stock" value="{{ $item->stock }}">
                                     </div>
                                     <button onclick="deleteElement('default')" type="button"
                                         class="mt-3 col-1 btn-close"></button>
