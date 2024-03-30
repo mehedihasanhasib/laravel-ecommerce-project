@@ -24,4 +24,9 @@ class Item extends Model
     {
         return $this->belongsTo(Size::class, 'size_id');
     }
+
+    public function color()
+    {
+        return $this->belongsTo(Color::class, 'color_id');
+    }
 }

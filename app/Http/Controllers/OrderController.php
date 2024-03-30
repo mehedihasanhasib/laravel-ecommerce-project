@@ -113,6 +113,10 @@ class OrderController extends Controller
 
         $images = Image::whereIn('product_id', $product_id)->get();
 
+        // foreach ($items as $key => $item) {
+        //     dump($item->product_name);
+        // }
+        // die();
         return view("pages.my_orders", [
             "orders" => $orders,
             "items" => $items,
