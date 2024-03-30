@@ -32,7 +32,7 @@
                             <tr>
                                 {{-- order id --}}
                                 <td>
-                                    <p class="mt-4">{{ $order->id }}</p>
+                                    <p class="mt-4">{{ $order->items[0]->product_id }}</p>
                                 </td>
                                 {{-- items --}}
                                 <td class="align-middle text-left">
@@ -44,7 +44,7 @@
                                     @endforeach
 
                                     <ul style="display: inline-block">
-                                        @foreach ($items as $item)
+                                        {{-- @foreach ($items as $item)
                                             @foreach ($item as $item2)
                                                 @if ($order->id == $item2['order_id'])
                                                     <li>
@@ -52,7 +52,7 @@
                                                     </li>
                                                 @endif
                                             @endforeach
-                                        @endforeach
+                                        @endforeach --}}
                                     </ul>
                                 </td>
 

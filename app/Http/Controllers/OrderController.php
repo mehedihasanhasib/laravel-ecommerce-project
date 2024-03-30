@@ -13,6 +13,7 @@ use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use PDO;
+use PhpParser\Node\Stmt\Foreach_;
 
 class OrderController extends Controller
 {
@@ -52,6 +53,7 @@ class OrderController extends Controller
     // create orders
     public function order(Request $request)
     {
+        $user_id = $request->user()->id;
         Order::create([
             "user_id" => $request->user()->id,
             "total_amount" => array_sum(
@@ -68,6 +70,7 @@ class OrderController extends Controller
             Item::create([
                 "order_id" => $order_id,
                 "product_id" => $item["id"],
+                "user_id" => $user_id,
                 "product_name" => $item["title"],
                 "size" => $item["size"],
                 "color" => $item["color"],
@@ -75,8 +78,13 @@ class OrderController extends Controller
                 "quantity" => $item["quantity"],
             ]);
 
-            ProductVariant::where('product_id', $item['id'])
-                ->decrement('stock', $item["quantity"]);
+            // $color_id = Color::where('color', $item['color'])->get('id');
+            // $size_id = Size::where('size', $item['size'])->get('id');
+
+            // ProductVariant::where('product_id', $item['id'])
+            //     ->where('color_id', $color_id)
+            //     ->where('size_id', $size_id)
+            //     ->decrement('stock', $item["quantity"]);
         }
 
         $items = Item::where("order_id", $order_id)->get();
@@ -94,27 +102,21 @@ class OrderController extends Controller
     public function myorders(Request $request)
     {
         $orders = Order::where("user_id", $request->user()->id)
-            ->get()
-            ->all();
+            ->get();
 
-        $items = array_map(function ($hello) {
-            return Item::where("order_id", $hello->id)
-                ->get()
-                ->all();
-        }, $orders);
+        $items = Item::where('user_id', $request->user()->id)->get()->all();
 
-        $products_id = [];
-
-        foreach ($items as $item) {
-            foreach ($item as $item2) {
-                array_push($products_id, $item2["product_id"]);
-            }
+        $product_id = [];
+        foreach ($items as $key => $item) {
+            array_push($product_id, $item->product_id);
         }
 
-        $images = array_map(function ($product_id) {
-            return Image::where("product_id", $product_id)->get()->first();
-        }, $products_id);
+        $images = [];
+        foreach ($product_id as $value) {
+            array_push($images, Image::where('product_id', $value)->get()->first());
+        }
 
+        die();
         return view("pages.my_orders", [
             "orders" => $orders,
             "items" => $items,
