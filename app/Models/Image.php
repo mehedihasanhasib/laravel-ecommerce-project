@@ -15,8 +15,8 @@ class Image extends Model
         'image_path'
     ];
 
-    public function item(): BelongsTo
+    public function item()
     {
-        return $this->belongsTo(Item::class, 'product_id');
+        return $this->hasMany(Item::class, 'product_id');
     }
 }
