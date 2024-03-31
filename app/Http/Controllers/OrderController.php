@@ -77,14 +77,6 @@ class OrderController extends Controller
                 "unit_price" => $item["price"],
                 "quantity" => $item["quantity"],
             ]);
-
-            // $color_id = Color::where('color', $item['color'])->get('id');
-            // $size_id = Size::where('size', $item['size'])->get('id');
-
-            // ProductVariant::where('product_id', $item['id'])
-            //     ->where('color_id', $color_id)
-            //     ->where('size_id', $size_id)
-            //     ->decrement('stock', $item["quantity"]);
         }
 
         $items = Item::where("order_id", $order_id)->get();

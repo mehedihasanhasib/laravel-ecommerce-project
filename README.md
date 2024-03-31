@@ -37,11 +37,7 @@ npm install
 before running the following command configure the **DB_DATABASE** in .env file
 
 ```
-php artisan migrate
-```
-
-```
-php artisan db:seed --class=AdminSeeder
+php artisan migrate --seed
 ```
 
 ```
