@@ -8,8 +8,10 @@
                 <tr>
                     <th>Product Title</th>
                     <th>Price</th>
-                    <th style="padding-left: 50px">Stock</th>
-                    <th style="padding-left: 50px">Actions</th>
+                    <th>Color</th>
+                    <th>Size</th>
+                    <th>Stock</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,14 +40,38 @@
                         {{-- <p class="text-muted mb-0">IT department</p> --}}
                     </td>
 
+                    {{-- Color --}}
+                    <td>
+                        @foreach ($stocks as $stock)
+                            @if ($stock->product_id == $product->id)
+                                <p class="fw-normal mb-1">
+                                    {{ $stock->color->color }}
+                                </p>
+                                <hr>
+                            @endif
+                        @endforeach
+                    </td>
+
+                    {{-- Color --}}
+                    <td>
+                        @foreach ($stocks as $stock)
+                            @if ($stock->product_id == $product->id)
+                                <p class="fw-normal mb-1">
+                                    {{ $stock->size->size }}
+                                </p>
+                                <hr>
+                            @endif
+                        @endforeach
+                    </td>
+
                     {{-- stock --}}
                     <td style="padding-left: 35px">
                         @foreach ($stocks as $stock)
                             @if ($stock->product_id == $product->id)
                                 <p class="fw-normal mb-1">
-                                    {{ $stock->color->color }} : {{ $stock->size->size }} :
                                     {{ $stock['stock'] }}
                                 </p>
+                                <hr>
                             @endif
                         @endforeach
                     </td>
@@ -54,7 +80,7 @@
                     <td style="">
                         <form action="{{ route('edit', ['id' => $product->id]) }}" style="display: inline-block">
                             @csrf
-                            <button class="btn btn-success">
+                            <button class="btn btn-sm btn-success">
                                 <i class="fa-regular fa-pen-to-square"></i>
                             </button>
                         </form>
@@ -63,7 +89,7 @@
                             style="display: inline-block">
                             @csrf
                             @method('delete')
-                            <button class="btn btn-danger">
+                            <button class="btn btn-sm btn-danger">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </form>
