@@ -9,10 +9,7 @@ use App\Models\Image;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Size;
-use Dotenv\Validator;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -70,7 +67,9 @@ class ProductController extends Controller
             'images.*.max' => 'The image should not exceed 2mb',
         ]);
 
-        $product = Product::create($data);
+        $product = Product::create(
+            $request->only(['title', 'description', 'category', 'price'])
+        );
 
         $variants = array_map(function ($color, $size, $stock) {
             return array(
@@ -79,6 +78,8 @@ class ProductController extends Controller
                 'stock' => $stock
             );
         }, $data['color'], $data['size'], $data['stock']);
+
+        dd($variants);
 
         $product_id = $product->id;
 

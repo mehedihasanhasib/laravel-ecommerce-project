@@ -78,7 +78,7 @@
 
                     {{-- action button --}}
                     <td style="">
-                        <form action="{{ route('edit', ['id' => $product->id]) }}" style="display: inline-block">
+                        <form action="{{ route('product.edit', $product->id) }}" style="display: inline-block">
                             @csrf
                             <button class="btn btn-sm btn-success">
                                 <i class="fa-regular fa-pen-to-square"></i>

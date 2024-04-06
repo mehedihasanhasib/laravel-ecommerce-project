@@ -120,7 +120,6 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::resource('product', ProductController::class)
-    ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['admin']);
 /* Admin Routes */
 
