@@ -1,6 +1,7 @@
 @extends('admin_index')
 @section('content')
-    <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data" class="row">
+    <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data" class="row">
+        @method('put')
         @csrf
         <h3 style="color: green; text-align: center; margin-top: 5px">{{ Session::get('message') ?? null }}</h3>
 
@@ -107,11 +108,10 @@
                                 <div class="row">
                                     <div class="mt-2 col-4">
                                         <select name="color[]" class="form-select">
-                                            <option selected value="">
-                                                {{ $item->color->color }}
-                                            </option>
                                             @foreach ($colors as $color)
-                                                <option value="{{ $color->color }}">{{ $color->color }}
+                                                <option value="{{ $color->color }}"
+                                                    {{ $item->color_id == $color->id ? 'selected' : null }}>
+                                                    {{ $color->color }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -120,11 +120,10 @@
                                     {{-- size --}}
                                     <div class="mt-2 col-3">
                                         <select name="size[]" class="form-select">
-                                            <option selected value="">
-                                                {{ $item->size->size }}
-                                            </option>
                                             @foreach ($sizes as $size)
-                                                <option value="{{ $size->size }}">{{ $size->size }}
+                                                <option value="{{ $size->size }}"
+                                                    {{ $item->size_id == $size->id ? 'selected' : null }}>
+                                                    {{ $size->size }}
                                                 </option>
                                             @endforeach
                                         </select>

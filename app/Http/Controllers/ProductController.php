@@ -79,8 +79,6 @@ class ProductController extends Controller
             );
         }, $data['color'], $data['size'], $data['stock']);
 
-        dd($variants);
-
         $product_id = $product->id;
 
         foreach ($variants as $variant) {
@@ -154,7 +152,35 @@ class ProductController extends Controller
     // update a product
     public function update(Request $request, Product $product)
     {
-        //
+
+        try {
+            Product::find($product->id)
+                ->update($request->only(['title', 'description', 'category', 'price']));
+
+            $variants = array_map(function ($color, $size, $stock) {
+                return array(
+                    "color" => $color,
+                    "size" => $size,
+                    "stock" => $stock
+                );
+            }, $request->color, $request->size, $request->stock);
+
+            foreach ($variants as $key => $variant) {
+
+                $color_id = Color::where('color', $variant['color'])->first()->id;
+                $size_id = Size::where('size', $variant['size'])->first()->id;
+
+                ProductVariant::where('product_id', $product->id)
+                    ->update([
+                        'color_id' => $color_id,
+                        'size_id' => $size_id,
+                        'stock' => $variant['stock']
+                    ]);
+            }
+        } catch (\Throwable $th) {
+            print_r($th->getMessage());
+        }
+        return redirect()->route('productlist')->with('message', 'product updated succesfully');
     }
 
     // delete a product

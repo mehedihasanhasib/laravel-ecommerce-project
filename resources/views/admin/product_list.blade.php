@@ -1,6 +1,7 @@
 @extends('admin_index', ['productlist' => 'active'])
 @section('content')
     <h3 style="color: red; text-align: center; margin-top: 7px">{{ session('success') ?? null }}</h3>
+    <h3 style="color: green; text-align: center; margin-top: 7px">{{ session('message') ?? null }}</h3>
 
     <div class="">
         <table class="table align-middle mb-0 bg-white">
@@ -47,19 +48,17 @@
                                 <p class="fw-normal mb-1">
                                     {{ $stock->color->color }}
                                 </p>
-                                <hr>
                             @endif
                         @endforeach
                     </td>
 
-                    {{-- Color --}}
+                    {{-- size --}}
                     <td>
                         @foreach ($stocks as $stock)
                             @if ($stock->product_id == $product->id)
                                 <p class="fw-normal mb-1">
                                     {{ $stock->size->size }}
                                 </p>
-                                <hr>
                             @endif
                         @endforeach
                     </td>
@@ -71,7 +70,6 @@
                                 <p class="fw-normal mb-1">
                                     {{ $stock['stock'] }}
                                 </p>
-                                <hr>
                             @endif
                         @endforeach
                     </td>
