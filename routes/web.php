@@ -117,10 +117,12 @@ Route::prefix('admin')->group(function () {
     // show edit page
     Route::get('/edit/{id}', [ProductController::class, 'edit'])
         ->name('edit');
+
+    Route::resource('product', ProductController::class)
+        ->middleware(['admin']);
 });
 
-Route::resource('product', ProductController::class)
-    ->middleware(['admin']);
+
 /* Admin Routes */
 
 Route::middleware('auth')->group(function () {

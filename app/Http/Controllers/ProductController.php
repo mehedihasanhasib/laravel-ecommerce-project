@@ -154,6 +154,8 @@ class ProductController extends Controller
     {
 
         try {
+            $old_variants = json_decode($request->product_variants);
+
             Product::find($product->id)
                 ->update($request->only(['title', 'description', 'category', 'price']));
 
@@ -169,18 +171,22 @@ class ProductController extends Controller
 
                 $color_id = Color::where('color', $variant['color'])->first()->id;
                 $size_id = Size::where('size', $variant['size'])->first()->id;
+                $old_color_id = $old_variants[$key]->color_id;
+                $old_size_id = $old_variants[$key]->size_id;
 
                 ProductVariant::where('product_id', $product->id)
+                    ->where('color_id', $old_color_id)
+                    ->where('size_id', $old_size_id)
                     ->update([
                         'color_id' => $color_id,
                         'size_id' => $size_id,
                         'stock' => $variant['stock']
                     ]);
             }
+            return redirect()->route('productlist')->with('message', 'product updated succesfully');
         } catch (\Throwable $th) {
-            print_r($th->getMessage());
+            return redirect()->route('productlist')->with('message', $th->getMessage());
         }
-        return redirect()->route('productlist')->with('message', 'product updated succesfully');
     }
 
     // delete a product

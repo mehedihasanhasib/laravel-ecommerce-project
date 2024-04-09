@@ -1,6 +1,7 @@
 @extends('admin_index')
 @section('content')
     <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data" class="row">
+        <input type="hidden" value="{{ $product_variants }}" name="product_variants">
         @method('put')
         @csrf
         <h3 style="color: green; text-align: center; margin-top: 5px">{{ Session::get('message') ?? null }}</h3>
