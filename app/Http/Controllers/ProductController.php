@@ -16,7 +16,7 @@ class ProductController extends Controller
     // display all product to users
     public function index()
     {
-        $products = Product::all();
+        $products = Product::orderBy('created_at', 'desc')->get();
         $images = Image::all();
         return view('pages.shop', [
             'products' => $products,
@@ -114,7 +114,7 @@ class ProductController extends Controller
         }
 
         event(new NewProduct());
-        return redirect()->route('addproduct')->with('message', 'product added succesfully');
+        return redirect()->route('addproduct')->with('message', 'Product added succesfully');
     }
 
     // display single product to users

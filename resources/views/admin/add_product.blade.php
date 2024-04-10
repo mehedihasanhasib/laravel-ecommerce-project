@@ -1,8 +1,10 @@
 @extends('admin_index', ['addproduct' => 'active'])
 @section('content')
-    <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data" class="row">
+    <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data" class="row mt-3">
         @csrf
-        <h3 style="color: green; text-align: center; margin-top: 5px">{{ Session::get('message') ?? null }}</h3>
+
+        <h4 style="color: green; text-align: center; margin-top: 5px">{{ Session::get('message') ?? null }}</h4>
+
 
         <div class="col-lg-7 col-sm">
             <!-- Product Information -->
