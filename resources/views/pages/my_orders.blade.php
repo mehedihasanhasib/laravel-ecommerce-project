@@ -38,31 +38,28 @@
                                 {{-- items --}}
                                 <td class="align-middle text-left">
 
+
                                     @foreach ($images as $key => $image)
                                         @foreach ($items as $item)
                                             @if ($order->id == $item->order_id && $image->product_id == $item->product_id)
-                                                <img src="{{ asset('product_images/' . $image->image_path) }}" alt=""
-                                                    style="width: 50px;">
+                                                <div class="d-flex align-items-center">
+                                                    <img class="m-1"
+                                                        src="{{ asset('product_images/' . $image->image_path) }}"
+                                                        alt="" style="width: 50px;">
+                                                    <li class="mx-4">
+                                                        {{ $item->product_name }}
+                                                    </li>
+                                                </div>
                                             @endif
                                         @endforeach
                                     @endforeach
-
-                                    <ul class="align-middle inline-block">
-                                        @foreach ($items as $item)
-                                            @if ($order->id == $item->order_id)
-                                                <li>
-                                                    {{ $item->product_name }}
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
                                 </td>
 
                                 {{-- color --}}
                                 <td class="align-middle" style="width: 90px">
                                     @foreach ($items as $key => $item)
                                         @if ($order->id == $item->order_id)
-                                            <div>
+                                            <div class="m-4">
                                                 {{ $item->color }}
                                             </div>
                                         @endif
@@ -73,7 +70,7 @@
                                 <td class="align-middle" style="width: 90px">
                                     @foreach ($items as $key => $item)
                                         @if ($order->id == $item->order_id)
-                                            <div>
+                                            <div class="m-4">
                                                 {{ $item->size }}
                                             </div>
                                         @endif
