@@ -124,6 +124,15 @@ class OrderController extends Controller
         ]);
     } //my orders
 
+    public function order_done($order_id)
+    {
+        Order::where('id', $order_id)->update([
+            'status' => 1
+        ]);
+
+        return back()->with('message', 'Status Updated Successfully');
+    }
+
     public function deleteCartItem(Request $request, $id)
     {
         session()->forget("cart." . $id);

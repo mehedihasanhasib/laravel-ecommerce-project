@@ -57,6 +57,9 @@ Route::post('order', [OrderController::class, 'order'])
     ->name('order');
 
 
+
+
+
 /* Admin Routes */
 Route::prefix('admin')->group(function () {
 
@@ -71,6 +74,16 @@ Route::prefix('admin')->group(function () {
     // admin logout
     Route::post('logout', [AdminController::class, 'logout'])
         ->name('admin.logout')
+        ->middleware(['admin']);
+
+    // add product page load
+    Route::get('addproduct', [ProductController::class, 'addproduct'])
+        ->name('addproduct')
+        ->middleware(['admin']);
+
+    // product list page load
+    Route::get('productlist', [ProductController::class, 'productlist'])
+        ->name('productlist')
         ->middleware(['admin']);
 
     // create category page load
@@ -103,6 +116,10 @@ Route::prefix('admin')->group(function () {
     // show all orders
     Route::get('/orders', [OrderController::class, 'index'])
         ->name('orders');
+
+    Route::put('order-done/{id}', [OrderController::class, 'order_done'])
+        ->middleware(['admin'])
+        ->name('order_done');
 
     // product resource route
     Route::resource('product', ProductController::class)

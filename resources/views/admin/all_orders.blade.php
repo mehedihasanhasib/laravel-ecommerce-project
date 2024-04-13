@@ -1,6 +1,6 @@
 @extends('admin_index', ['allorders' => 'active'])
 @section('content')
-    <h3 style="color: red; text-align: center; margin-top: 7px">{{ session('success') ?? null }}</h3>
+    <h3 style="color: green; text-align: center; margin-top: 7px">{{ session('message') ?? null }}</h3>
 
     <div class="">
         <table class="table align-middle mb-0 bg-white">
@@ -82,15 +82,16 @@
                                         <i class="fa-solid fa-check"></i>
                                     </button>
                                 @endif
-
                             </p>
                         </td>
 
                         {{-- action button --}}
                         <td style="">
-                            <form action="" method="POST" style="display: inline-block">
+                            <form action="{{ route('order_done', $order->id) }}" method="POST"
+                                style="display: inline-block">
                                 @csrf
-                                <button class="btn btn-primary">
+                                @method('put')
+                                <button {{ $order->status ? 'disabled' : null }} class="btn btn-primary">
                                     Done
                                 </button>
                             </form>
