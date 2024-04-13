@@ -22,7 +22,16 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::all();
-        return view('admin.all_orders', ['orders' => $orders]);
+        $images = Image::all()->unique('product_id');
+        $items = Item::all();
+        return view(
+            'admin.all_orders',
+            [
+                'orders' => $orders,
+                'images' => $images,
+                'items' => $items,
+            ]
+        );
     }
 
     // add to cart

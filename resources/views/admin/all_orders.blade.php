@@ -6,13 +6,13 @@
         <table class="table align-middle mb-0 bg-white">
             <thead class="bg-light">
                 <tr>
-                    <th>Order ID</th>
-                    <th>Customer Name</th>
-                    <th>Customer Email</th>
-                    <th>Qty</th>
-                    <th>Total Price</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th class="p-2 align-middle">Order ID</th>
+                    <th class="p-2 align-middle">Cust. Name</th>
+                    <th class="p-2 align-middle">Items</th>
+                    <th class="p-2 align-middle">Qty</th>
+                    <th class="p-2 align-middle">Total Price</th>
+                    <th class="p-2 align-middle">Status</th>
+                    <th class="p-2 align-middle">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,7 +20,7 @@
                 @foreach ($orders as $order)
                     <tr>
                         {{-- order id --}}
-                        <td>
+                        <td class="p-2 align-middle">
                             <div class="d-flex align-items-center">
                                 <p class="mb-1">
                                     {{ $order->id }}
@@ -29,21 +29,32 @@
                         </td>
 
                         {{-- Customer Name --}}
-                        <td>
+                        <td class="p-2 align-middle">
                             <p class="fw-normal mb-1">
                                 {{ $order->users->name }}
                             </p>
                         </td>
 
-                        {{-- Customer Email --}}
-                        <td style="">
-                            <p class="fw-normal mb-1">
-                                {{ $order->users->email }}
-                            </p>
+
+                        {{-- items --}}
+                        <td class="p-2 align-middle">
+                            @foreach ($images as $key => $image)
+                                @foreach ($items as $item)
+                                    @if ($order->id == $item->order_id && $image->product_id == $item->product_id)
+                                        <div class="d-flex align-items-center">
+                                            <img class="m-1" src="{{ asset('product_images/' . $image->image_path) }}"
+                                                alt="" style="width: 50px;">
+                                            <li class="mx-4">
+                                                {{ $item->product_name }}
+                                            </li>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endforeach
                         </td>
 
                         {{-- Qty --}}
-                        <td style="">
+                        <td class="p-2 align-middle">
                             <p class="fw-normal mb-1">
                                 @php
                                     $qty = 0;
@@ -58,7 +69,7 @@
                         </td>
 
                         {{-- Total Price --}}
-                        <td style="">
+                        <td class="p-2 align-middle">
                             @php
                                 $price = 0;
                             @endphp
@@ -76,14 +87,14 @@
                         </td>
 
                         {{-- Status --}}
-                        <td style="">
+                        <td class="p-2 align-middle">
                             <p class="fw-normal mb-1">
                                 @if (!$order->status)
-                                    <button class="btn disabled btn-warning">
+                                    <button class="btn btn-sm disabled btn-warning">
                                         <i class="fa-solid fa-hourglass-half"></i>
                                     </button>
                                 @else
-                                    <button class="btn disabled btn-success">
+                                    <button class="btn btn-sm disabled btn-success">
                                         <i class="fa-solid fa-check"></i>
                                     </button>
                                 @endif
@@ -91,12 +102,12 @@
                         </td>
 
                         {{-- action button --}}
-                        <td style="">
+                        <td class="p-2 align-middle">
                             <form action="{{ route('order_done', $order->id) }}" method="POST"
                                 style="display: inline-block">
                                 @csrf
                                 @method('put')
-                                <button {{ $order->status ? 'disabled' : null }} class="btn btn-primary">
+                                <button {{ $order->status ? 'disabled' : null }} class="btn btn-sm btn-primary">
                                     Done
                                 </button>
                             </form>
