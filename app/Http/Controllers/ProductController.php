@@ -153,40 +153,36 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
 
-        try {
-            $old_variants = json_decode($request->product_variants);
+        $old_variants = json_decode($request->product_variants);
 
-            Product::find($product->id)
-                ->update($request->only(['title', 'description', 'category', 'price']));
+        Product::find($product->id)
+            ->update($request->only(['title', 'description', 'category', 'price']));
 
-            $variants = array_map(function ($color, $size, $stock) {
-                return array(
-                    "color" => $color,
-                    "size" => $size,
-                    "stock" => $stock
-                );
-            }, $request->color, $request->size, $request->stock);
+        $variants = array_map(function ($color, $size, $stock) {
+            return array(
+                "color" => $color,
+                "size" => $size,
+                "stock" => $stock
+            );
+        }, $request->color, $request->size, $request->stock);
 
-            foreach ($variants as $key => $variant) {
+        foreach ($variants as $key => $variant) {
 
-                $color_id = Color::where('color', $variant['color'])->first()->id;
-                $size_id = Size::where('size', $variant['size'])->first()->id;
-                $old_color_id = $old_variants[$key]->color_id;
-                $old_size_id = $old_variants[$key]->size_id;
+            $color_id = Color::where('color', $variant['color'])->first()->id;
+            $size_id = Size::where('size', $variant['size'])->first()->id;
+            $old_color_id = $old_variants[$key]->color_id;
+            $old_size_id = $old_variants[$key]->size_id;
 
-                ProductVariant::where('product_id', $product->id)
-                    ->where('color_id', $old_color_id)
-                    ->where('size_id', $old_size_id)
-                    ->update([
-                        'color_id' => $color_id,
-                        'size_id' => $size_id,
-                        'stock' => $variant['stock']
-                    ]);
-            }
-            return redirect()->route('productlist')->with('message', 'product updated succesfully');
-        } catch (\Throwable $th) {
-            return redirect()->route('productlist')->with('message', $th->getMessage());
+            ProductVariant::where('product_id', $product->id)
+                ->where('color_id', $old_color_id)
+                ->where('size_id', $old_size_id)
+                ->update([
+                    'color_id' => $color_id,
+                    'size_id' => $size_id,
+                    'stock' => $variant['stock']
+                ]);
         }
+        return redirect()->route('productlist')->with('message', 'product updated succesfully');
     }
 
     // delete a product

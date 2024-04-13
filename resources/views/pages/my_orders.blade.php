@@ -37,8 +37,6 @@
                                 </td>
                                 {{-- items --}}
                                 <td class="align-middle text-left">
-
-
                                     @foreach ($images as $key => $image)
                                         @foreach ($items as $item)
                                             @if ($order->id == $item->order_id && $image->product_id == $item->product_id)
@@ -83,9 +81,6 @@
                                 </td>
                             </tr>
                         @endforeach
-
-
-
                     </tbody>
                 </table>
 
