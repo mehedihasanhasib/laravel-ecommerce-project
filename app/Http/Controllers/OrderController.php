@@ -104,23 +104,23 @@ class OrderController extends Controller
         // getting all orders of the current customer
         $orders = Order::where("user_id", $request->user()->id)
             ->get();
+
         // getting items where the order is the current customers
         $items = Item::where('user_id', $request->user()->id)->get()->all();
         $product_id = [];
+
         foreach ($items as $item) {
-            array_push($product_id, $item->product_id);
+            $product_id[] = $item->product_id;
         }
 
-        $images = Image::whereIn('product_id', $product_id)->get();
+        $images = Image::whereIn('product_id', $product_id)->get()->unique('product_id');
+        $items = Item::whereIn('product_id', $product_id)->get();
 
-        // foreach ($items as $key => $item) {
-        //     dump($item->product_name);
-        // }
-        // die();
         return view("pages.my_orders", [
             "orders" => $orders,
             "items" => $items,
             "images" => $images,
+            "items" => $items,
         ]);
     } //my orders
 

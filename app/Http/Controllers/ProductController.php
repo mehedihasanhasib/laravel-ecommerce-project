@@ -122,8 +122,8 @@ class ProductController extends Controller
     {
         $product = Product::find($product_id);
         $images = Image::where('product_id', $product_id)->get();
-        $colors = ProductVariant::with('color')->where('product_id', $product->id)->get()->unique('color.id');
-        $sizes = ProductVariant::with('size')->where('product_id', $product->id)->get()->unique('size.id');
+        $colors = ProductVariant::where('product_id', $product->id)->get()->unique('color.id');
+        $sizes = ProductVariant::where('product_id', $product->id)->get()->unique('size.id');
 
         return view('pages.detail', [
             'product' => $product,

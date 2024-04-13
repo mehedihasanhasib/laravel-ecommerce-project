@@ -14,7 +14,7 @@
     </div> --}}
     <!-- Page Header End -->
 
-    <!-- Cart Start -->
+    <!-- order Start -->
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
             <div class="col-lg-10 table-responsive mb-5">
@@ -23,8 +23,9 @@
                         <tr>
                             <th>Order Id</th>
                             <th>Items</th>
+                            <th>Color</th>
+                            <th>Size</th>
                             <th>Total</th>
-                            <th style="width: 180px">Payment Method</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
@@ -36,36 +37,52 @@
                                 </td>
                                 {{-- items --}}
                                 <td class="align-middle text-left">
-                                    @foreach ($images as $image)
-                                        @foreach ($image->item as $item)
-                                            @if ($order->id == $item->order_id)
-                                                <img src="{{ asset('product_images/' . $image['image_path']) }}"
-                                                    alt="" style="width: 50px;">
+
+                                    @foreach ($images as $key => $image)
+                                        @foreach ($items as $item)
+                                            @if ($order->id == $item->order_id && $image->product_id == $item->product_id)
+                                                <img src="{{ asset('product_images/' . $image->image_path) }}" alt=""
+                                                    style="width: 50px;">
                                             @endif
                                         @endforeach
                                     @endforeach
 
-                                    <ul style="display: inline-block">
+                                    <ul class="align-middle inline-block">
                                         @foreach ($items as $item)
                                             @if ($order->id == $item->order_id)
                                                 <li>
-                                                    {{ $item->product_name }} | Color:{{ $item->color }},
-                                                    Size:{{ $item->size }}
+                                                    {{ $item->product_name }}
                                                 </li>
                                             @endif
                                         @endforeach
                                     </ul>
                                 </td>
 
-                                {{-- total amount --}}
+                                {{-- color --}}
                                 <td class="align-middle" style="width: 90px">
-                                    {{ $order['total_amount'] }}
+                                    @foreach ($items as $key => $item)
+                                        @if ($order->id == $item->order_id)
+                                            <div>
+                                                {{ $item->color }}
+                                            </div>
+                                        @endif
+                                    @endforeach
                                 </td>
 
-
-                                {{-- payment method --}}
+                                {{-- Size --}}
                                 <td class="align-middle" style="width: 90px">
-                                    {{ $order['payment_method'] }}
+                                    @foreach ($items as $key => $item)
+                                        @if ($order->id == $item->order_id)
+                                            <div>
+                                                {{ $item->size }}
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </td>
+
+                                {{-- total amount --}}
+                                <td class="align-middle" style="width: 90px">
+                                    {{ $order->total_amount }}
                                 </td>
                             </tr>
                         @endforeach
