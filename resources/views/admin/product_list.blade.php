@@ -93,6 +93,9 @@
                     </td>
                 </tr>
             @endforeach
+            <div class="d-flex justify-content-center">
+                {{ $products->links() }}
+            </div>
         </tbody>
     </table>
 </div>

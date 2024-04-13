@@ -184,10 +184,11 @@
                     </div>
                 @endforeach
 
-
             </div>
             <!-- Shop Product End -->
         </div>
     </div>
-    <!-- Shop End -->
+    <div class="d-flex justify-content-center">
+        {{ $products->links() }}
+    </div> <!-- Shop End -->
 @endsection

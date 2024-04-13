@@ -16,7 +16,7 @@ class ProductController extends Controller
     // display all product to users
     public function index()
     {
-        $products = Product::orderBy('created_at', 'desc')->get();
+        $products = Product::orderBy('created_at', 'desc')->paginate(2);
         $images = Image::all();
         return view('pages.shop', [
             'products' => $products,
@@ -27,7 +27,7 @@ class ProductController extends Controller
     // list all product to admin
     public function productlist()
     {
-        $products = Product::all();
+        $products = Product::orderBy('created_at', 'desc')->paginate(2);
         $stock = ProductVariant::all();
         $images = Image::all();
 

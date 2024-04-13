@@ -17,11 +17,10 @@ use PhpParser\Node\Stmt\Foreach_;
 
 class OrderController extends Controller
 {
-
     // show all orders to admin
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::orderBy('created_at', 'desc')->paginate('1');
         $images = Image::all()->unique('product_id');
         $items = Item::all();
         return view(

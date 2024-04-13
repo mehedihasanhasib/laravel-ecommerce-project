@@ -114,7 +114,11 @@
                         </td>
                     </tr>
                 @endforeach
+                <div class="d-flex justify-content-center">
+                    {{ $orders->links() }}
+                </div>
             </tbody>
         </table>
+
     </div>
 @endsection
