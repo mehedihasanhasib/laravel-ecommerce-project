@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->integer('total_amount');
             $table->string('payment_method');
-            $table->string('status')->default('pending');
+            $table->string('status')->default(0);
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

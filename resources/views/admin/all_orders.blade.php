@@ -13,7 +13,7 @@
                     <th>Qty</th>
                     <th>Total Price</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -73,7 +73,7 @@
                         {{-- Status --}}
                         <td style="">
                             <p class="fw-normal mb-1">
-                                @if ($order->status == 'pending')
+                                @if (!$order->status)
                                     <button class="btn disabled btn-warning">
                                         <i class="fa-solid fa-hourglass-half"></i>
                                     </button>

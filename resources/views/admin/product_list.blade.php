@@ -81,8 +81,9 @@
                                 <i class="fa-regular fa-pen-to-square"></i>
                             </button>
                         </form>
-                        {{-- {{ route('product.destroy', ['product' => $product->id]) }} --}}
-                        <form action="" method="POST" style="display: inline-block">
+
+                        <form action="{{ route('product.destroy', ['product' => $product->id]) }}" method="POST"
+                            style="display: inline-block">
                             @csrf
                             @method('delete')
                             <button class="btn btn-sm btn-danger" id="btn" onclick="delete(e)">
@@ -95,16 +96,4 @@
         </tbody>
     </table>
 </div>
-@endsection
-
-@section('script')
-<script>
-    const btn = document.getElementById("btn");
-
-    if (btn) {
-        btn.addEventListener("click", (e) => {
-            confirm('Do You Want To Delete The Item?')
-        })
-    }
-</script>
 @endsection

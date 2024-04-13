@@ -73,16 +73,6 @@ Route::prefix('admin')->group(function () {
         ->name('admin.logout')
         ->middleware(['admin']);
 
-    // add product page load
-    Route::get('addproduct', [ProductController::class, 'addproduct'])
-        ->name('addproduct')
-        ->middleware(['admin']);
-
-    // product list page load
-    Route::get('productlist', [ProductController::class, 'productlist'])
-        ->name('productlist')
-        ->middleware(['admin']);
-
     // create category page load
     Route::get('/create-category', [CategoryController::class, 'index'])
         ->name('create_category')
@@ -114,10 +104,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])
         ->name('orders');
 
-    // show edit page
-    Route::get('/edit/{id}', [ProductController::class, 'edit'])
-        ->name('edit');
-
+    // product resource route
     Route::resource('product', ProductController::class)
         ->middleware(['admin']);
 });
