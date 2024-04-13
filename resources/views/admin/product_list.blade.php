@@ -87,7 +87,7 @@
                             style="display: inline-block">
                             @csrf
                             @method('delete')
-                            <button class="btn btn-sm btn-danger">
+                            <button class="btn btn-sm btn-danger" id="btn">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </form>
@@ -151,4 +151,16 @@
         </tbody>
     </table>
 </div>
+@endsection
+
+@section('script')
+<script>
+    const btn = document.getElementById('btn');
+
+    if (btn) {
+        btn.addEventListener('click', (e) => {
+            confirm("Do You Want to Delete?");
+        })
+    }
+</script>
 @endsection
