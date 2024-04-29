@@ -6,9 +6,7 @@
         <h3 style="color: green; text-align: center; margin-top: 5px">{{ Session::get('message') ?? null }}</h3>
 
         <div class="col-lg-7 col-sm">
-            <!-- Product Information -->
             <div class="card mb-4">
-
                 <div class="card-header">
                     <h5 class="card-tile mb-0">Create Color</h5>
                 </div>
@@ -22,10 +20,37 @@
                             <p style="color: red">{{ $message }}</p>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-success">Create</button>
+                    <button type="submit" class="btn btn-success">Add Color</button>
                 </div>
             </div>
         </div> {{-- 1st col --}}
+
+        <div class="col-lg-5 col-sm">
+            <div class="card">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">SL</th>
+                            <th scope="col">Color Name</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($colors as $color)
+                            <tr>
+                                <th scope="row">{{ $color->id }}</th>
+                                <td>{{ $color->color }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger" id="btn" onclick="delete(e)">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
     </form>
 @endsection

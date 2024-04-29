@@ -9,7 +9,8 @@ class ColorController extends Controller
 {
     public function index()
     {
-        return view('admin.create_color');
+        $colors = Color::orderBy('created_at', 'desc')->get();
+        return view('admin.create_color', ['colors' => $colors]);
     }
 
     public function store(Request $request)
@@ -18,8 +19,8 @@ class ColorController extends Controller
             'color' => 'required|max:255'
         ]);
 
-        Color::updateOrInsert($data);
+        Color::UpdateOrCreate($data);
 
-        return redirect()->route('addproduct');
+        return back();
     }
 }
