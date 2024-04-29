@@ -9,7 +9,7 @@ class SizeController extends Controller
 {
     public function index()
     {
-        $sizes = Size::orderBy('created_at', 'desc')->get();
+        $sizes = Size::orderBy('created_at')->get();
         return view('admin.create_size', ['sizes' => $sizes]);
     }
 
@@ -19,17 +19,15 @@ class SizeController extends Controller
             'size' => 'required|max:255'
         ]);
 
-        try {
-            Size::UpdateOrCreate($data);
+        Size::UpdateOrCreate($data);
 
-            return back();
-        } catch (\Throwable $th) {
-            dump($th->getMessage());
-        }
+        return back()->with('message', 'Size Added');
     }
 
     public function destroy(string $sizeId)
     {
-        echo $sizeId;
+        Size::destroy($sizeId);
+
+        return back();
     }
 }

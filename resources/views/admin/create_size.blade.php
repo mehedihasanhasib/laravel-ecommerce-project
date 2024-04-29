@@ -2,13 +2,18 @@
 
 @section('content')
     <div class="row">
-        <h3 style="color: green; text-align: center; margin-top: 5px">{{ Session::get('message') ?? null }}</h3>
+        <h3 style="
+        color: green;
+        text-align: center;
+        margin-top: 8px">
+            {{ Session::get('message') ?? null }}
+        </h3>
         <div class="col-lg-7 col-sm">
             <form action="{{ route('create_size') }}" method="POST">
                 @csrf
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5 class="card-tile mb-0">Create Color</h5>
+                        <h5 class="card-tile mb-0">Create Size</h5>
                     </div>
                     <div class="card-body">
                         {{-- title --}}
