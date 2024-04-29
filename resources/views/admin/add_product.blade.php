@@ -29,136 +29,121 @@
                     </div>
                     {{-- description ends --}}
 
-                    <div class="">
-                        <div class="mb-4">
+                    {{-- price starts --}}
+                    <div class="mb-3">
+                        <label class="form-label" for="ecommerce-product-name">Price</label>
+                        <input type="number" class="form-control" id="ecommerce-product-name" placeholder="Price"
+                            name="price" value="{{ old('price') ?? null }}">
 
-                            <div class="">
-                                {{-- price --}}
-                                <div class="mb-3">
-                                    <label class="form-label" for="ecommerce-product-name">Price</label>
-                                    <input type="number" class="form-control" id="ecommerce-product-name"
-                                        placeholder="Price" name="price" value="{{ old('price') ?? null }}">
+                        @error('price')
+                            <p style="color: red">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    {{-- price ends --}}
 
-                                    @error('price')
-                                        <p style="color: red">{{ $message }}</p>
-                                    @enderror
-                                </div>
+                    {{-- image upload starts --}}
+                    <div class="mb-3">
 
-                                {{-- image upload --}}
-                                <div class="mb-3">
+                        <label for="images[]" class="form-label">Upload Images</label>
+                        <input name="images[]" class="form-control" type="file" multiple />
 
-                                    <label for="images[]" class="form-label">Upload Images</label>
-                                    <input name="images[]" class="form-control" type="file" multiple />
+                        @error('images')
+                            <p style="color: red">{{ $message }}</p>
+                        @enderror
 
-                                    @error('images')
-                                        <p style="color: red">{{ $message }}</p>
-                                    @enderror
+                        @foreach ($errors->get('images.*') as $messages)
+                            @foreach ($messages as $message)
+                                <p style="color: red">{{ $message }}</p>
+                            @endforeach
+                        @endforeach
+                    </div>
+                    {{-- image upload ends --}}
 
-                                    @foreach ($errors->get('images.*') as $messages)
-                                        @foreach ($messages as $message)
-                                            <p style="color: red">{{ $message }}</p>
-                                        @endforeach
-                                    @endforeach
-                                </div>
+                    {{-- categories --}}
+                    <div class="mb-3">
+                        <label for="defaultSelect" class="form-label">Category</label>
+                        <select name="category" id="defaultSelect" class="form-select">
+                            <option selected value="">Select Category ..</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->category }}
+                                </option>
+                            @endforeach
+                        </select>
 
+                        @error('category')
+                            <p style="color: red">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    {{-- categories ends --}}
 
-                                {{-- categories --}}
-                                <div class="mb-3">
-                                    <label for="defaultSelect" class="form-label">Category</label>
-                                    <select name="category" id="defaultSelect" class="form-select">
-                                        <option selected value="">Select Category ..</option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->category }}
+                    {{-- Add Variants Stars --}}
+                    <div class="form-repeater" id="variant-container">
+                        {{--  Variants Button Ends  --}}
+                        <label class="form-label" for="ecommerce-product-name">Variants</label>
+                        <div class="d-flex mb-2">
+                            <div style="padding-right: 4px">
+                                <button class="btn btn-primary btn-sm" id="add-variant">
+                                    Add More Varient
+                                </button>
+                            </div>
+                            <div class="inline-block">
+                                <button class="btn btn-primary btn-sm" id="custom-variant">
+                                    Add Custom Varient
+                                </button>
+                            </div>
+                        </div>
+                        {{-- Variants Button Ends --}}
+
+                        {{-- select variants starts --}}
+                        <div id="default">
+                            <div class="row">
+                                <div class="mt-2 col-4">
+                                    <select name="color[]" class="form-select">
+                                        <option selected value="">Color</option>
+                                        @foreach ($colors as $color)
+                                            <option value="{{ $color->color }}">{{ $color->color }}
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="mt-2 col-3">
+                                    <select name="size[]" class="form-select">
+                                        <option selected value="">Size</option>
+                                        @foreach ($sizes as $size)
+                                            <option value="{{ $size->size }}">{{ $size->size }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                                    @error('category')
-                                        <p style="color: red">{{ $message }}</p>
-                                    @enderror
-                                </div> {{-- categories --}}
+                                <div class="mt-2 col-4">
+                                    <input name="stock[]" type="number" id="form-repeater-1-2" class="form-control"
+                                        placeholder="Stock">
+                                </div>
 
-
-                                <div class="form-repeater" id="variant-container">
-                                    {{--  Variants  --}}
-                                    <label class="form-label" for="ecommerce-product-name">Variants</label>
-                                    <div class="d-flex">
-                                        <div style="padding-right: 4px">
-                                            <button class="btn btn-primary btn-sm" id="add-variant">
-                                                Add More Varient
-                                            </button>
-                                        </div>
-                                        <div class="inline-block">
-                                            <button class="btn btn-primary btn-sm" id="custom-variant">
-                                                Add Custom Varient
-                                            </button>
-                                        </div>
-                                    </div>
-                                    {{-- variants ends --}}
-
-                                    <div id="default">
-
-                                        <div class="row">
-
-                                            <div class="mt-2 col-4">
-
-                                                <select name="color[]" class="form-select">
-                                                    <option selected value="">Color</option>
-                                                    @foreach ($colors as $color)
-                                                        <option value="{{ $color->color }}">{{ $color->color }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-
-                                            </div>
-
-                                            <div class="mt-2 col-3">
-
-                                                <select name="size[]" class="form-select">
-                                                    <option selected value="">Size</option>
-                                                    @foreach ($sizes as $size)
-                                                        <option value="{{ $size->size }}">{{ $size->size }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-
-                                            </div>
-
-                                            <div class="mt-2 col-4">
-                                                <input name="stock[]" type="number" id="form-repeater-1-2"
-                                                    class="form-control" placeholder="Stock">
-                                            </div>
-
-
-                                            <button onclick="deleteElement('default')" type="button"
-                                                class="mt-3 col-1 btn-close"></button>
-
-
-                                        </div>
-                                    </div>
-
-                                    @error('color*')
-                                        <p style="color: red">The color field is required.</p>
-                                    @enderror
-
-                                    @error('size*')
-                                        <p style="color: red">The size field is required.</p>
-                                    @enderror
-
-
-                                    @error('stock*')
-                                        <p style="color: red">The stock field is required.</p>
-                                    @enderror
-
-                                </div> <!-- /Variants -->
-
-                            </div> {{-- card body --}}
-
+                                <button onclick="deleteElement('default')" type="button"
+                                    class="mt-3 col-1 btn-close"></button>
+                            </div>
                         </div>
+                        {{-- select variants ends --}}
 
-                    </div> {{-- 2nd col --}}
+                        @error('color*')
+                            <p style="color: red">The color field is required.</p>
+                        @enderror
 
-                    <button type="submit" class="btn btn-success">Submit</button>
+                        @error('size*')
+                            <p style="color: red">The size field is required.</p>
+                        @enderror
+
+
+                        @error('stock*')
+                            <p style="color: red">The stock field is required.</p>
+                        @enderror
+
+                    </div>
+                    {{-- Add Variants Ends --}}
+
+                    <button type="submit" class="mt-3 btn btn-success">Submit</button>
                 </div>
             </div>
         </div>
