@@ -9,6 +9,8 @@
 
     <title>Admin Dashboard - Eshopper</title>
 
+    @yield('style')
+
     <meta name="description" content="" />
 
     <!-- Favicon -->

@@ -41,11 +41,17 @@
                     </div>
                     {{-- price ends --}}
 
+                    {{-- show upload image starts --}}
+                    <div id="preview">
+
+                    </div>
+                    {{-- show upload image ends --}}
+
                     {{-- image upload starts --}}
                     <div class="mb-3">
 
                         <label for="images[]" class="form-label">Upload Images</label>
-                        <input name="images[]" class="form-control" type="file" multiple />
+                        <input id="fileInput" name="images[]" class="form-control" type="file" multiple />
 
                         @error('images')
                             <p style="color: red">{{ $message }}</p>
@@ -150,10 +156,27 @@
     </form>
 @endsection
 
+@section('style')
+    <style>
+        #preview {
+            display: flex;
+        }
+
+        .preview-image {
+            margin: 5px;
+            width: 180px;
+            border: 1x solid black;
+        }
+    </style>
+@endsection
+
 @section('script')
     <script>
         let id1 = 0;
         let id2 = 0;
+
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
 
         document.getElementById("add-variant").addEventListener("click", function(event) {
             event.preventDefault();
@@ -242,5 +265,27 @@
         function deleteElement(id) {
             document.getElementById(id).remove();
         }
+
+        fileInput.addEventListener('change', function() {
+            preview.innerHTML = ''; // Clear previous previews
+
+            const files = this.files;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (!file.type.startsWith('image/')) {
+                    continue; // Skip if not an image file
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imageUrl = event.target.result;
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    img.classList.add('preview-image');
+                    preview.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
     </script>
 @endsection
