@@ -9,7 +9,8 @@ class SizeController extends Controller
 {
     public function index()
     {
-        return view('admin.create_size');
+        $sizes = Size::orderBy('created_at', 'desc')->get();
+        return view('admin.create_size', ['sizes' => $sizes]);
     }
 
     public function store(Request $request)
@@ -18,8 +19,17 @@ class SizeController extends Controller
             'size' => 'required|max:255'
         ]);
 
-        Size::updateOrInsert($data);
+        try {
+            Size::UpdateOrCreate($data);
 
-        return redirect()->route('addproduct');
+            return back();
+        } catch (\Throwable $th) {
+            dump($th->getMessage());
+        }
+    }
+
+    public function destroy(string $sizeId)
+    {
+        echo $sizeId;
     }
 }

@@ -104,13 +104,24 @@ Route::prefix('admin')->group(function () {
     Route::post('/create-color', [ColorController::class, 'store'])
         ->middleware(['admin']);
 
+    // Delete color
+    Route::delete('/delete-color/{colorId}', [ColorController::class, 'destroy'])
+        ->name('delete_color')
+        ->middleware(['admin']);
+
     // create size page load
     Route::get('/create-size', [SizeController::class, 'index'])
         ->name('create_size')
         ->middleware(['admin']);
 
-    // create color
+    // create size
     Route::post('/create-size', [SizeController::class, 'store'])
+        ->name('create_size')
+        ->middleware(['admin']);
+
+    // Delete size
+    Route::delete('/delete-size/{sizeId}', [SizeController::class, 'destroy'])
+        ->name('delete_size')
         ->middleware(['admin']);
 
     // show all orders

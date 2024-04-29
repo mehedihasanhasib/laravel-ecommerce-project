@@ -23,4 +23,11 @@ class ColorController extends Controller
 
         return back();
     }
+
+    public function destroy(string $colorId)
+    {
+        Color::destroy($colorId);
+
+        return back();
+    }
 }
