@@ -42,9 +42,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($sizes as $size)
+                        @foreach ($sizes as $key => $size)
                             <tr>
-                                <th scope="row">{{ $size->id }}</th>
+                                <th scope="row">{{ $key + 1 }}</th>
                                 <td>{{ $size->size }}</td>
                                 <td>
                                     <form action="{{ route('delete_size', ['sizeId' => $size->id]) }}" method="POST">

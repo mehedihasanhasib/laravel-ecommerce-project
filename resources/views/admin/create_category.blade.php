@@ -1,36 +1,71 @@
 @extends('admin_index', ['create_category' => 'active'])
 
 @section('content')
-    <form action="{{ route('create_category') }}" method="POST" class="row d-flex justify-content-center">
-        @csrf
-        <h3 style="color: green; text-align: center; margin-top: 5px">{{ Session::get('message') ?? null }}</h3>
-
+    <div class="row">
+        <h3 style="
+        color: green;
+        text-align: center;
+        margin-top: 8px">
+            {{ Session::get('message') ?? null }}
+        </h3>
         <div class="col-lg-7 col-sm">
-            <!-- Product Information -->
-            <div class="card mb-4">
-
-                <div class="card-header">
-                    <h5 class="card-tile mb-0">Create Category</h5>
-                </div>
-                <div class="card-body">
-                    {{-- title --}}
-                    <div class="mb-3">
-                        <label class="form-label" for="ecommerce-product-name">Category Name</label>
-                        <input type="text" class="form-control" placeholder="Category Name" name="category"
-                            aria-label="title" value="{{ old('category') ?? null }}">
-                        @error('category')
-                            <p style="color: red">{{ $message }}</p>
-                        @enderror
+            <form action="{{ route('create_category') }}" method="POST">
+                @csrf
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-tile mb-0">Create Category</h5>
                     </div>
-                    <button type="submit" class="btn btn-success">Create</button>
+                    <div class="card-body">
+                        {{-- title --}}
+                        <div class="mb-3">
+                            <label class="form-label" for="ecommerce-product-name">Category Name</label>
+                            <input type="text" class="form-control" placeholder="Category Name" name="category"
+                                aria-label="title" value="{{ old('size') ?? null }}">
+                            @error('category')
+                                <p style="color: red">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn btn-success">Add Category</button>
+                    </div>
                 </div>
-            </div>
         </div> {{-- 1st col --}}
+        </form>
 
-    </form>
+        <div class="col-lg-5 col-sm">
+            <div class="card">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($categorys as $key => $category)
+                            <tr>
+                                <td scope="row">{{ $key + 1 }}</td>
+                                <td>{{ $category->category }}</td>
+                                <td>
+                                    <form action="{{ route('delete_category', ['categoryId' => $category->id]) }}"
+                                        method="POST">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-sm btn-danger">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 @endsection
 
-{{-- @section('script')
+<!-- {{-- @section('script')
     <script>
         let id1 = 0;
         let id2 = 0;
@@ -123,4 +158,4 @@
             document.getElementById(id).remove();
         }
     </script>
-@endsection --}}
+@endsection --}} -->

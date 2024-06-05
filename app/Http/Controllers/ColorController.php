@@ -9,7 +9,7 @@ class ColorController extends Controller
 {
     public function index()
     {
-        $colors = Color::orderBy('created_at')->get();
+        $colors = Color::orderBy('id', 'desc')->get();
         return view('admin.create_color', ['colors' => $colors]);
     }
 

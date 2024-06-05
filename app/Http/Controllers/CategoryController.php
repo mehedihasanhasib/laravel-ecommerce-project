@@ -9,7 +9,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return view('admin.create_category');
+        $categorys = Category::orderBy('id', 'desc')->get();
+        return view('admin.create_category', ['categorys' => $categorys]);
     }
 
     public function store(Request $request)
@@ -20,6 +21,13 @@ class CategoryController extends Controller
 
         Category::updateOrInsert($data);
 
-        return redirect()->route('addproduct');
+        return back();
+    }
+
+    public function destroy(string $colorId)
+    {
+        Category::destroy($colorId);
+
+        return back();
     }
 }

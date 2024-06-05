@@ -9,7 +9,7 @@ class SizeController extends Controller
 {
     public function index()
     {
-        $sizes = Size::orderBy('created_at')->get();
+        $sizes = Size::orderBy('id', 'desc')->get();
         return view('admin.create_size', ['sizes' => $sizes]);
     }
 

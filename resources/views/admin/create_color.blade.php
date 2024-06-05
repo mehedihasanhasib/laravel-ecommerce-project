@@ -37,9 +37,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($colors as $color)
+                        @foreach ($colors as $key => $color)
                             <tr>
-                                <th scope="row">{{ $color->id }}</th>
+                                <th scope="row">{{ $key + 1 }}</th>
                                 <td>{{ $color->color }}</td>
                                 <td>
                                     <form action="{{ route('delete_color', ['colorId' => $color->id]) }}" method="POST">
