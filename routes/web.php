@@ -84,6 +84,15 @@ Route::prefix('admin')->group(function () {
 });
 
 
+Route::get('/upload-page', function () {
+    return view("video_upload");
+});
+
+Route::post('/video-upload', function (\Illuminate\Http\Request $request) {
+    dd($request->all());
+});
+
+
 /* Admin Routes */
 
 Route::middleware('auth')->group(function () {
